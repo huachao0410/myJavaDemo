@@ -1,0 +1,55 @@
+/*用户中心*/
+.user_tx_outside{width: 100%; height: 150px; padding-top:30px; background: url(../images/usercenter_bg.jpg) no-repeat center top;}
+.user_tx_outside .user_tx{width: 70px;height: 70px;margin: 0 auto;border: #fff 2px solid; border-radius:100%;overflow: hidden;}
+.user_tx_outside .user_tx img{max-width: 100%;}
+.user_tx_outside .user_name{padding: 20px 0; text-align: center;font-size: 14px;color: #fff;}
+.user_list{background: #fff;border-top: #dcdcdc 1px solid;}
+.user_list li{position: relative; border-bottom: #dcdcdc 1px solid;height: 40px; line-height: 40px;}
+.user_list li i.user_icon{position: absolute;left: 10px;top: 0; z-index: 1; font-size: 20px;color: #12b7f5;}
+.user_list li i.icon_arrow{position: absolute;right: 10px;top: 0; z-index: 1; font-size: 20px;color: #12b7f5;}
+.user_list li a{display: block; font-size: 14px;color: #666; padding-left: 40px;}
+.user_list li a:hover{color: #12b7f5;}
+/*修改密码-获取验证码*/
+.step_div_outside{overflow: hidden;width: 100%;height: 40px;background: #fff; border-bottom: #dcdcdc 1px solid;}
+.step_div_outside .step_one,.step_div_outside .step_two{width: 50%;text-align: center; line-height: 40px;font-size: 14px;color: #333;}
+.step_div_outside .step_one.on{background: #12b7f5;color: #fff;}
+.step_div_outside .step_two{background: url(../images/arrow_blue.png) no-repeat left center;}
+.step_div_outside .step_two.on{background: url(../images/arrow_white.png) no-repeat left center #12b7f5;color: #fff;}
+
+/*绑定微信*/
+.wechat_img{text-align: center; padding: 40px 0;}
+.wechat_img img{width: 180px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

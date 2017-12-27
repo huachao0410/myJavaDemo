@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.bmsoft.dxms.dao.face.BjtjDao" >
+  <resultMap id="BaseResultMap" type="cn.com.bmsoft.dxms.domain.Bjtj" >
+    <id column="S_GUID" property="sGuid" jdbcType="VARCHAR" />
+    <result column="S_CREATION_TIME" property="sCreationTime" jdbcType="TIMESTAMP" />
+    <result column="S_LAST_UPDATED_TIME" property="sLastUpdatedTime" jdbcType="TIMESTAMP" />
+    <result column="OPERATETYPE" property="operatetype" jdbcType="VARCHAR" />
+    <result column="BM" property="bm" jdbcType="VARCHAR" />
+    <result column="YWL" property="ywl" jdbcType="VARCHAR" />
+    <result column="GXSJ" property="gxsj" jdbcType="DATE" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    S_GUID, S_CREATION_TIME, S_LAST_UPDATED_TIME, OPERATETYPE, BM, YWL, GXSJ
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_bjtj
+    where S_GUID = #{sGuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_bjtj
+    where S_GUID = #{sGuid,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="cn.com.bmsoft.dxms.domain.Bjtj" >
+    insert into t_bjtj (S_GUID, S_CREATION_TIME, S_LAST_UPDATED_TIME, 
+      OPERATETYPE, BM, YWL, 
+      GXSJ)
+    values (#{sGuid,jdbcType=VARCHAR}, #{sCreationTime,jdbcType=TIMESTAMP}, #{sLastUpdatedTime,jdbcType=TIMESTAMP}, 
+      #{operatetype,jdbcType=VARCHAR}, #{bm,jdbcType=VARCHAR}, #{ywl,jdbcType=VARCHAR}, 
+      #{gxsj,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.bmsoft.dxms.domain.Bjtj" >
+    insert into t_bjtj
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sGuid != null" >
+        S_GUID,
+      </if>
+      <if test="sCreationTime != null" >
+        S_CREATION_TIME,
+      </if>
+      <if test="sLastUpdatedTime != null" >
+        S_LAST_UPDATED_TIME,
+      </if>
+      <if test="operatetype != null" >
+        OPERATETYPE,
+      </if>
+      <if test="bm != null" >
+        BM,
+      </if>
+      <if test="ywl != null" >
+        YWL,
+      </if>
+      <if test="gxsj != null" >
+        GXSJ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sGuid != null" >
+        #{sGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="sCreationTime != null" >
+        #{sCreationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sLastUpdatedTime != null" >
+        #{sLastUpdatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatetype != null" >
+        #{operatetype,jdbcType=VARCHAR},
+      </if>
+      <if test="bm != null" >
+        #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="ywl != null" >
+        #{ywl,jdbcType=VARCHAR},
+      </if>
+      <if test="gxsj != null" >
+        #{gxsj,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.bmsoft.dxms.domain.Bjtj" >
+    update t_bjtj
+    <set >
+      <if test="sCreationTime != null" >
+        S_CREATION_TIME = #{sCreationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sLastUpdatedTime != null" >
+        S_LAST_UPDATED_TIME = #{sLastUpdatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatetype != null" >
+        OPERATETYPE = #{operatetype,jdbcType=VARCHAR},
+      </if>
+      <if test="bm != null" >
+        BM = #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="ywl != null" >
+        YWL = #{ywl,jdbcType=VARCHAR},
+      </if>
+      <if test="gxsj != null" >
+        GXSJ = #{gxsj,jdbcType=DATE},
+      </if>
+    </set>
+    where S_GUID = #{sGuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.bmsoft.dxms.domain.Bjtj" >
+    update t_bjtj
+    set S_CREATION_TIME = #{sCreationTime,jdbcType=TIMESTAMP},
+      S_LAST_UPDATED_TIME = #{sLastUpdatedTime,jdbcType=TIMESTAMP},
+      OPERATETYPE = #{operatetype,jdbcType=VARCHAR},
+      BM = #{bm,jdbcType=VARCHAR},
+      YWL = #{ywl,jdbcType=VARCHAR},
+      GXSJ = #{gxsj,jdbcType=DATE}
+    where S_GUID = #{sGuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

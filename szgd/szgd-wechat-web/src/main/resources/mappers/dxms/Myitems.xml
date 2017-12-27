@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.bmsoft.dxms.dao.face.IMyItemsDao" >
+  <resultMap id="BaseResultMap" type="cn.com.bmsoft.dxms.domain.Myitems" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="OPENID" property="openid" jdbcType="VARCHAR" />
+    <result column="ITEMSNAME" property="itemsname" jdbcType="VARCHAR" />
+    <result column="BIDTIME" property="bidtime" jdbcType="TIMESTAMP" />
+    <result column="DEPT" property="dept" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="BIT" />
+    <result column="BIDID" property="bidid" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ID, OPENID, ITEMSNAME, BIDTIME, DEPT, STATUS, BIDID
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_myitems
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_myitems
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="cn.com.bmsoft.dxms.domain.Myitems" >
+    insert into t_myitems (ID, OPENID, ITEMSNAME,
+      BIDTIME, DEPT, STATUS,
+      BIDID)
+    values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{itemsname,jdbcType=VARCHAR},
+      #{bidtime,jdbcType=TIMESTAMP}, #{dept,jdbcType=VARCHAR}, #{status,jdbcType=BIT},
+      #{bidid,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="cn.com.bmsoft.dxms.domain.Myitems" >
+    insert into t_myitems
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="openid != null" >
+        OPENID,
+      </if>
+      <if test="itemsname != null" >
+        ITEMSNAME,
+      </if>
+      <if test="bidtime != null" >
+        BIDTIME,
+      </if>
+      <if test="dept != null" >
+        DEPT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="bidid != null" >
+        BIDID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsname != null" >
+        #{itemsname,jdbcType=VARCHAR},
+      </if>
+      <if test="bidtime != null" >
+        #{bidtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dept != null" >
+        #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="bidid != null" >
+        #{bidid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.bmsoft.dxms.domain.Myitems" >
+    update t_myitems
+    <set >
+      <if test="openid != null" >
+        OPENID = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsname != null" >
+        ITEMSNAME = #{itemsname,jdbcType=VARCHAR},
+      </if>
+      <if test="bidtime != null" >
+        BIDTIME = #{bidtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dept != null" >
+        DEPT = #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=BIT},
+      </if>
+      <if test="bidid != null" >
+        BIDID = #{bidid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="cn.com.bmsoft.dxms.domain.Myitems" >
+    update t_myitems
+    set USERID = #{openid,jdbcType=VARCHAR},
+      ITEMSNAME = #{itemsname,jdbcType=VARCHAR},
+      BIDTIME = #{bidtime,jdbcType=TIMESTAMP},
+      DEPT = #{dept,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=BIT},
+      BIDID = #{bidid,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

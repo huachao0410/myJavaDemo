@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>404</title>
+		<#include "../include/head_meta.xhtml">
+		<#include "../include/head_css.xhtml">
+	</head>
+	<style type="text/css">
+		.errow_img{
+			margin: 50px 0; text-align: center;
+		}
+		.errow_img img{max-width: 250px;}
+	</style>
+
+	<body ontouchstart>
+		<div class="errow_img">
+			<img src="${requestContext.contextPath}/resources/template/common/images/404.png" />
+		</div>
+		<!--<div class="weui-msg">
+	      	<div class="weui-msg__icon-area">
+	      	</div>
+		     <div class="weui-msg__text-area">
+		        <h2 class="weui-msg__title title_little">页面不存在</h2>
+		    </div>
+		    
+		</div>
+		<div class="weui-flex fix-bottom full-weight">
+			<div class="weui-flex__item">
+				<a href="javascript:;" id="back" class="weui-btn weui-btn_primary">关闭</a>
+			</div>
+		</div>-->
+
+		<#include "../include/head_js.xhtml">
+		<script>
+			$(function() {
+				
+				$('#back').on('click',function(){
+					WeixinJSBridge.call('closeWindow');
+				});
+				
+			});
+			
+		</script>
+	</body>
+
+</html>

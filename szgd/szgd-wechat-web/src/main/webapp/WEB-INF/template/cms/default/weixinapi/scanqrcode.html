@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>微信扫码接口</title>
+</head>
+<body>
+
+
+<div class="btn_div">
+    <button id="doResultBtn" class="weui-btn weui-btn_primary">微信处理结果</button>
+
+</div>
+<div class="btn_div">
+    <button id="resultBtn" class="weui-btn weui-btn_primary">直接返回结果</button>
+
+</div>
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script>
+
+    $(function () {
+        var jsApiList = [
+            'scanQRCode'
+
+        ] ;// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '${appid}', // 必填，公众号的唯一标识
+            timestamp: ${signature.timestamp}, // 必填，生成签名的时间戳
+            nonceStr: '${signature.nonceStr}', // 必填，生成签名的随机串
+            signature: '${signature.signature}',// 必填，签名，见附录1
+            jsApiList:jsApiList
+        });
+
+        wx.ready(function () {
+
+            /**微信处理结果*/
+            $('#doResultBtn').on('click',function () {
+                scanQRCode(0);
+            });
+            /**直接返回结果*/
+            $('#resultBtn').on('click',function () {
+                scanQRCode(1);
+            });
+
+        });
+
+    });
+
+
+
+    function scanQRCode(needResult) {
+        wx.scanQRCode({
+            needResult: needResult, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (res) {
+                alert(JSON.stringify(res));
+                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+            },
+            cancel: function (res) {
+                alert('用户拒绝授权获取地理位置');
+            },
+            fail:function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+    }
+
+
+
+</script>
+
+</body>
+</html>

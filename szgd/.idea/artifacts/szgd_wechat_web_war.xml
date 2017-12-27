@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="szgd-wechat-web:war">
+    <output-path>$PROJECT_DIR$/szgd-wechat-web/target</output-path>
+    <root id="archive" name="szgd-wechat-web.war">
+      <element id="artifact" artifact-name="szgd-wechat-web:war exploded" />
+    </root>
+  </artifact>
+</component>

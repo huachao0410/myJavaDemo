@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>H5支付</title>
+    <style>
+
+        .weui-cell_name {
+            width: 180px;
+        }
+
+        .weui-label {
+            width: 100%;
+        }
+
+        .page_msg {
+            padding: 75px 15px 0;
+            text-align: center;
+        }
+
+        .icon_msg {
+            width: 100px;
+            height: 100px;
+            vertical-align: middle;
+            display: inline-block;
+            border-radius: 50%;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+        }
+        .icon_msg.warn {
+            background-color: #f86161;
+            color: #fff;
+            font-size: 60px;
+            font-style: normal;
+        }
+        .icon_area {
+            margin-bottom: 19px;
+        }
+        .text_area {
+            margin-bottom: 25px;
+        }
+        .text_area .title {
+            margin-bottom: 12px;
+        }
+        h2 {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="content" style="display: block">
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell ">
+            <div class="weui-cell__hd weui-cell_name"><label class="weui-label">商品名称：</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" id="username" name="username" value="测试商品" disabled="disabled">
+            </div>
+        </div>
+        <div class="weui-cell ">
+            <div class="weui-cell__hd weui-cell_name"><label class="weui-label">支付金额(单位/分)：</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" id="identityId" name="identityId" value="1" disabled="disabled">
+            </div>
+        </div>
+    </div>
+
+    <a id="payBtn">
+        <div class="btn_div">
+            <input class="btn_blue" type="submit" value="确定购买">
+        </div>
+    </a>
+</div>
+
+<div id="errpage" class="page_msg" style="display: none">
+    <div class="icon_area"><i class="icon_msg warn">!</i></div>
+    <div class="text_area">
+        <h2 id="111" class="title">请在微信外打开订单，进行支付</h2>
+    </div>
+</div>
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+
+<script>
+
+    window.onload = function () {
+        if (isWeiXin()) {
+            $('#errpage').show();
+            $('#content').hide();
+        } else {
+            $(function () {
+                $('#errpage').hide();
+                getPrepayId();
+
+            });
+        }
+    };
+
+
+    /**统一下单api接口*/
+    function getPrepayId() {
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "${requestContext.contextPath}/weixin/pay/webprepay",
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                if (data.status == '1' && data.code == '200') {
+                    //成功
+                    var datas = data.datas;
+                    var mweb_url = datas[0].mweb_url;
+//                    var url = "weixin://wap/pay?prepayid%3Dwx2017082316561773b29322a40498291282&package=4006911171&noncestr=1503478578&sign=ed8c2016ec5c7bb3c9f9edb8d0fafa07";
+                    //跳转微信客户端支付页面
+                    $('#payBtn').attr("href", mweb_url);
+
+                } else {
+                    alert(data.errorMessage);
+                }
+            },
+            error: function (data) {
+                alert(data.errorMessage);
+            }
+        });
+    }
+
+    /**判断是否为微信浏览器*/
+    function isWeiXin() {
+        var ua = window.navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

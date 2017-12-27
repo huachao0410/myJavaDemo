@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>可在线办理</title>
+	 	<style>
+    	
+    	.btn-guide-panel { display: inline-block;}
+		.btn-guide {text-decoration : none; height: 28px; padding: 9px 15px; font-size: 18px; color: #fff; background: url(${requestContext.contextPath}/resources/template/dxms/onlinebid/btn-guide-bg.png) repeat-x; border-radius: 5px; display: inline-block; margin-right: 5px;}
+		.btn-guide:hover {text-decoration : none; background: url(${requestContext.contextPath}/resources/template/dxms/onlinebid/btn-guide-bg-on.png) repeat-x; color: #fff;}
+		.btn-guide.disabled, .btn-guide.disabled:hover {text-decoration : none; background: url(${requestContext.contextPath}/resources/template/dxms/onlinebid/btn-guide-bg-disabled.png) repeat-x; cursor: default;}
+		.btn-guide img { vertical-align: middle; margin-right: 5px;}
+    	
+    	</style>
+	</head>
+	
+	<body >
+		<div id="mainDiv" style="width:100%;height:100%;overflow:auto;">
+			
+		</div>
+		<!--页脚end-->
+		<script src="${requestContext.contextPath}/resources/template/common/lib/jquery.weui-1.0.1/lib/jquery-2.1.4.js"></script>
+		<script>
+			var onlineBidList = [
+			    {"id":1,"code":"30697300000694017502440000","name":"最低生活保障申请家庭经济状况核对查询服务","dept":"省民政厅","workingDay":0,"onlineUrl":"","downloadUrl":"http://www.gdbs.gov.cn/download/oss-sxml/2017/11/20171128151456102078.doc?Expires=1513842201&OSSAccessKeyId=meIrfMMdmLV1RDQ7&Signature=zgCMOofB1Ipf7jUiDywjlkg%2FWmY%3D"}
+			    ,{"id":2,"code":"30697400000694017502440000","name":"特困人员供养申请家庭经济状况核对查询服务","dept":"省民政厅","workingDay":0,"onlineUrl":"","downloadUrl":"http://www.gdbs.gov.cn/download/oss-sxml/2017/12/20171201165423033993.doc?Expires=1513849073&OSSAccessKeyId=meIrfMMdmLV1RDQ7&Signature=6jSVglqFkJuCb%2F0uk7uoIPZmGU4%3D"}
+			    ,{"id":3,"code":"30000040000069401752440000","name":"医疗救助申请家庭经济状况核对查询服务","dept":"省民政厅","workingDay":0,"onlineUrl":"","downloadUrl":"http://www.gdbs.gov.cn/download/oss-sxml/2017/12/20171201165658035753.doc?Expires=1513849160&OSSAccessKeyId=meIrfMMdmLV1RDQ7&Signature=k4LCvMs6SGmlCxj%2BLaTuyGwnWFg%3D"}
+			    ,{"id":4,"code":"30000010000069401752440000","name":"教育救助申请家庭经济状况核对查询服务","dept":"省民政厅","workingDay":0,"onlineUrl":"","downloadUrl":"http://www.gdbs.gov.cn/download/oss-sxml/2017/12/20171201172925042802.doc?Expires=1513849220&OSSAccessKeyId=meIrfMMdmLV1RDQ7&Signature=qArPpRYwnD%2B1Qy9JGrfAWXJuhOQ%3D"}
+			    ,{"id":5,"code":"30000030000069401752440000","name":"就业救助申请家庭经济状况核对查询服务","dept":"省民政厅","workingDay":0,"onlineUrl":"","downloadUrl":"http://www.gdbs.gov.cn/download/oss-sxml/2017/12/20171201173836042995.doc?Expires=1513844804&OSSAccessKeyId=meIrfMMdmLV1RDQ7&Signature=uHYS6sRpduwX41P8a7uIeMUNfLc%3D"}
+			    ,{"id":6,"code":"30000060000069401752440000","name":"受灾人员救助申请家庭经济状况核对查询服务","dept":"省民政厅","workingDay":0,"onlineUrl":"","downloadUrl":"http://www.gdbs.gov.cn/download/oss-sxml/2017/12/20171201172234041385.doc?Expires=1513844906&OSSAccessKeyId=meIrfMMdmLV1RDQ7&Signature=s%2B6SeWj00zITmJrqWvEf2kaP3tw%3D"}
+			    ,{"id":7,"code":"30000020000069401752440000","name":"住房救助申请家庭经济状况核对查询服务","dept":"省民政厅","workingDay":0,"onlineUrl":"","downloadUrl":"http://www.gdbs.gov.cn/download/oss-sxml/2017/12/20171201173442043830.doc?Expires=1513844987&OSSAccessKeyId=meIrfMMdmLV1RDQ7&Signature=M%2FYq5fZPPTvVbO6CwZe27f4iP2Q%3D"}
+			    ,{"id":8,"code":"30000050000069401752440000","name":"临时救助申请家庭经济状况核对查询服务","dept":"省民政厅","workingDay":0,"onlineUrl":"","downloadUrl":"http://www.gdbs.gov.cn/download/oss-sxml/2017/12/20171201171808039224.doc?Expires=1513845063&OSSAccessKeyId=meIrfMMdmLV1RDQ7&Signature=x9%2FE2gNPNorbtXKJAemTwbE5qN4%3D"}
+			    ,{"id":9,"code":"30697500000694017502440000","name":"低收入家庭申请家庭经济状况核对查询服务","dept":"省民政厅","workingDay":0,"onlineUrl":"","downloadUrl":"http://www.gdbs.gov.cn/download/oss-sxml/2017/12/20171201165540035505.doc?Expires=1513845133&OSSAccessKeyId=meIrfMMdmLV1RDQ7&Signature=kqlaDFmyKtg9vFixiqjHgMF%2BU6w%3D"}
+			    ,{"id":10,"code":"30697000000694129002440000","name":"残疾、孤老、烈属减征个人所得税","dept":"省地税局","workingDay":0,"onlineUrl":"http://ds.etax-gd.gov.cn/yhgl/service/um/swt/oSsoClient.do?gnId=CJGLLSJZGRSDSJMBA","downloadUrl":"http://www.gdbs.gov.cn/download/oss-sxml/2017/11/20171110201617206433.doc?Expires=1513845358&OSSAccessKeyId=meIrfMMdmLV1RDQ7&Signature=no%2FVLnDgFOenFAx%2FRbmXFxf3hMg%3D"}
+			    ];
+		
+			$(function () {
+				
+				var html = '';
+				html += '<table id="onlineBidTable" cellspacing="0" cellspacing="0" border="0" style="width:100%;">';
+				for(var i = 0; i < onlineBidList.length; i++){
+					var item = onlineBidList[i];
+					
+					html += '<tr>';
+					html += '<td align="center" style="width:100%;padding-top:2%;padding-left:2%;padding-right:2%;" >';
+					html += '<table cellspacing="0" cellspacing="0" border="0" style="width:96%;border:1px solid #02b4ed;">';
+					html += '<tr>';
+					html += '<td align="left" colspan="2" style="font-weight:bold;font-size:22px;color:#02b4ed;width:100%;padding:2%;">';
+					html += item.name;					
+					html += '</td>';								
+					html += '</tr>';
+					html += '<tr>';
+					html += '<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">';
+					html += '<b>主管部门：</b>' + item.dept + '&nbsp;<b>承诺办结时限：</b>' + item.workingDay + '工作日';
+					html += '</td>';
+					html += '</tr>';
+					html += '<tr>';
+					html += '<td align="center" style="width:50%;padding-bottom:2%;">';
+					if(item.onlineUrl && item.onlineUrl.length > 0){
+						html += '<a href="' + item.onlineUrl + '" class="btn-guide" target="_blank">';
+					}else{
+						html += '<a href="#" class="btn-guide disabled">';
+					}		
+					html += '<img src="${requestContext.contextPath}/resources/template/dxms/onlinebid/btn-zxsb.png">';
+					html += '<span>在线办理</span>';
+					html += '</a>';
+					html += '</td>';
+					html += '<td align="center" style="width:50%;padding-bottom:2%;">';
+					if(item.downloadUrl && item.downloadUrl.length > 0){
+						html += '<a href="' + item.downloadUrl + '" class="btn-guide" target="_blank">';
+					}else{
+						html += '<a href="#" class="btn-guide disabled">';
+					}	
+					html += '<img src="${requestContext.contextPath}/resources/template/dxms/onlinebid/btn-bgxz.png">';
+					html += '<span>表格下载</span>';
+					html += '</a>';
+					html += '</td>';
+					html += '</tr>';
+					html += '</table>';	
+					html += '</td>';
+					html += '</tr>';	
+				}
+				html += '</table>';
+				
+				$("#mainDiv").html(html);
+			});
+		</script>
+	</body>
+	
+
+</html>

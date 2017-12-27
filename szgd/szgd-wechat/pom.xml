@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>bmsoft.com.cn</groupId>
+        <artifactId>szgd</artifactId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>szgd-wechat</artifactId>
+    <name>szgd-wechat</name>
+    <url>http://maven.apache.org</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <!--modules-->
+        <dependency>
+            <groupId>bmsoft.com.cn</groupId>
+            <artifactId>szgd-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+		<!--servlet-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+		<!-- json -->
+        <dependency>
+        	<groupId>com.alibaba</groupId>
+        	<artifactId>fastjson</artifactId>
+        	<version>1.1.37</version>
+        </dependency>
+        <!-- async-http-client -->
+        <dependency>
+        	<groupId>com.ning</groupId>
+        	<artifactId>async-http-client</artifactId>
+        	<version>1.8.13</version>
+        </dependency>
+        <!-- freemarker-->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.19</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>授权用户信息</title>
+    <style>
+
+        body, html {
+            height: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .demos-title {
+            text-align: center;
+            font-size: 34px;
+            color: #3cc51f;
+            font-weight: 400;
+            margin: 0 15%;
+        }
+
+        .demos-sub-title {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .demos-header {
+            padding: 35px 0;
+        }
+
+        .demos-content-padded {
+            padding: 15px;
+        }
+
+        .demos-second-title {
+            text-align: center;
+            font-size: 24px;
+            color: #3cc51f;
+            font-weight: 400;
+            margin: 0 15%;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 14px;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #999;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+
+<body ontouchstart>
+
+
+<div class="weui-tab">
+    <div class="weui-tab__bd">
+        <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+            <h1>页面一</h1>
+        </div>
+        <div id="tab2" class="weui-tab__bd-item">
+            <h1>页面二</h1>
+        </div>
+        <div id="tab3" class="weui-tab__bd-item">
+            <h1>页面三</h1>
+        </div>
+    </div>
+
+    <div class="weui-tabbar">
+        <a href="#tab1" class="weui-tabbar__item weui-bar__item--on">
+            <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>
+            <p class="weui-tabbar__label">微信</p>
+        </a>
+        <a href="getTest()" class="weui-tabbar__item">
+            <p class="weui-tabbar__label">通讯录</p>
+        </a>
+        <a href="#tab3" class="weui-tabbar__item">
+            <p class="weui-tabbar__label">我</p>
+        </a>
+    </div>
+</div>
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script src="${requestContext.contextPath}/resources/template/cms/default/js/weixin_base.js"></script>
+
+<script>
+    $(function () {
+
+        $("#tab2").select({
+            title: "选择职业",
+            items: ["法官", "医生", "猎人", "学生", "记者", "其他"]
+        });
+    });
+
+    function getTest() {
+        GWC.urlParams = {
+            'appid': '${appid}',
+            'scope': 'snsapi_userinfo',
+            'state': 'roly'
+        };
+        getUserInfo();
+        /**获取code码*/
+        GWC.getUrlParams();
+        GWC.doRedirect();
+    }
+    function getUserInfo() {
+        var code = getQueryString('code');
+        if (code != null) {
+            //换取code码
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: "${requestContext.contextPath}/weixin/oauth/authorization?code=" + code,
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == '1' && data.code == '200') {
+
+                     alert("已获取");
+
+                    }else {
+                        alert(data.errorMessage);
+                    }
+                },
+                error:function (data) {
+                    alert(data.errorMessage);
+                }
+            });
+        }
+
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURI(r[2]);
+        return null;
+    }
+
+</script>
+
+
+</body>
+</html>

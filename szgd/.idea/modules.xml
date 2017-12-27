@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/szgd.iml" filepath="$PROJECT_DIR$/szgd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/szgd-common/szgd-common.iml" filepath="$PROJECT_DIR$/szgd-common/szgd-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/szgd-console/szgd-console.iml" filepath="$PROJECT_DIR$/szgd-console/szgd-console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/szgd-wechat/szgd-wechat.iml" filepath="$PROJECT_DIR$/szgd-wechat/szgd-wechat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/szgd-wechat-web/szgd-wechat-web.iml" filepath="$PROJECT_DIR$/szgd-wechat-web/szgd-wechat-web.iml" />
+    </modules>
+  </component>
+</project>

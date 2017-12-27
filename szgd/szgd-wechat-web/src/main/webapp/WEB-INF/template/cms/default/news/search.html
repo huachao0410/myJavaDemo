@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>搜索</title>
+		<#include "../../../include/head_meta.xhtml"/>
+		<#include "../../../include/head_css.xhtml"/>
+		<#include "../style.xhtml"/>
+	</head>
+	<style type="text/css">
+		
+
+	</style>
+
+	<body>
+		<!--header-->
+		<div class="header_outside">
+			<div class="header">
+				<!--search-->
+				<div class="weui-search-bar ml-10 mt-3 pl-0 no-bg" id="searchBar">
+					<div class="weui-search-bar__form">
+						<div class="weui-search-bar__box">
+							<i class="weui-icon-search"></i>
+							<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+							<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+						</div>
+						<label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+				          	<i class="weui-icon-search"></i>
+				        	<span>搜索</span>
+				        </label>
+					</div>
+					<a href="javascript:" class="weui-search-bar__cancel-btn color-white" id="searchCancel">取消</a>
+				</div>
+				
+			</div>
+		</div>
+		<!--热词-->
+		<div class="mt-20 ml-15 mr-15">
+			<b class="hot_title">热词</b>
+			<div class="hot_word">
+				<a href="#">热词</a>
+				<a href="#">热词1</a>
+				<a href="#">热词2</a>
+				<a href="#">热词3</a>
+				<a href="#">热词3default_footer</a>
+				<a href="#">热词</a>
+				<a href="#">热词1</a>
+				<a href="#">热词2</a>
+				<a href="#">热词3</a>
+			</div>
+		</div>
+		<div class="index_news">
+		    <ul id="list" class="index_news_ul">
+		
+		    </ul>
+		
+		</div>
+		
+		
+		<div class="weui-loadmore">
+		    <i class="weui-loading"></i>
+		    <span class="weui-loadmore__tips">正在加载</span>
+		</div>
+		<#include "../../../include/head_js.xhtml"/>
+		<#include "../default_head_js.xhtml"/>
+		<script>
+			var channelId = getSearchObj().channelId;  //获取地址栏departid
+       		var siteId = "2";
+			$(function () {
+				
+				//搜索事件
+				$("#searchInput").on('keypress',function(e) {  
+					$("#list").html("");
+	                getList(siteId, 1, 5);
+	        	 });  
+				
+			});
+			//新闻列表
+			
+       		 
+       		FastClick.attach(document.body);
+	        $(document.body).infinite();
+	        var loading = false;  //状态标记
+	        var page = 1;
+	        var rows = 5;
+	        
+	        $(document.body).infinite().on("infinite", function () {
+	            if (loading) return;
+	            loading = true;
+	            setTimeout(function () {
+	                //滚动方法
+	                page = page + 1;
+	                getList(siteId, page, rows);  //数据列表
+	                loading = false;
+	            }, 1500);
+	        });
+       		 
+		    function getList(siteId, page, rows) {
+				var contentTitle=$('#searchInput').val();  //关键词
+		        $.ajax({
+		            url: _newsList,
+		            type: "get",
+		            data: {
+		                siteId: siteId,
+		                keyword : contentTitle,
+		                page: page,
+		                rows: rows
+		
+		            },
+		            success: function (data) {
+		                if (data.status == 1 && data.code == 200) {
+		                    var html = '';
+		                    var datas = data.datas;
+		                    for (var i = 0 ; i < datas.length; i ++) {
+		                        html += '<li>'
+		                        			+ '<div class="news_div">'
+					                            + '<a class="news_btn" href="#" name="' + datas[i].id + '">'
+					                            	+ '<b class="index_news_title">' + datas[i].title + '</b>'
+					                            	+ '<img class="index_news_img"  src="${requestContext.contextPath}/resources/template/cms/default/images/pic_home_slider_4.jpg"/>'
+					                            + '</a>'
+				                            + '</div>'
+				                            + '<div class="hidden pr-110">'
+				                            	 + '<span class="news_time fl">' + datas[i].releaseDate + '</span>'
+				                           		 + '<span class="news_item fr"><i class="icon Hui-iconfont">&#xe686;</i>' + '('+ datas[i].commentsDay +')</span>'
+				                           		 + '<span class="news_item fr mr-10"><i class="icon Hui-iconfont">&#xe697;</i>' + '('+ datas[i].upsDay +')</span>'
+				                            + '</div>'
+				                         + '</li>';
+		                       
+		                    }
+		                     $("#list").append(html);
+		                    var total = data.total;
+		                    if (page * rows > total -1) {
+		                        $(document.body).destroyInfinite();
+		                        $(".weui-loadmore").html('<span class="color-8">没有数据了</span>');
+		                    }
+		
+		                } else {
+		                    alert(data.errorMessage);
+		                }
+		            },
+		            error: function (data) {
+		                console.log(data.errorMessage);
+		            }
+		        });
+		
+		    }
+		    $(document).on('click','.news_btn',function(){
+				var id = $(this).attr('name');
+				window.location.href =  "${requestContext.contextPath}/weixin/cms/open?template=default&path=/news/news_detail&id=" + id;
+			});
+		</script>
+	</body>
+	
+
+</html>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="szgd-console:war">
+    <output-path>$PROJECT_DIR$/szgd-console/target</output-path>
+    <root id="archive" name="szgd-console.war">
+      <element id="artifact" artifact-name="szgd-console:war exploded" />
+    </root>
+  </artifact>
+</component>

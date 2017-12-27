@@ -1,0 +1,93 @@
+.menu-matter {
+	
+}
+
+.menu-matter table {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-collapse: collapse;
+	text-align: center;
+	font-family: "Microsoft Yahei", Verdana, "Helvetica Neue", Helvetica,
+		Arial, sans-serif;
+	font-size: 14px;
+	/*     width : 200; */
+}
+
+.menu-matter table td a {
+	color: #333333;
+	text-decoration: none;
+	padding: 5px 10px;
+	display: inline-block;
+	width: 85px;
+	text-align: center;
+}
+
+.menu-matter table td {
+	width: 150;
+	height: 150;
+	display: table-cell;
+	vertical-align: inherit;
+	padding: 20px;
+}
+
+.bg-f6 {
+	background: #f6f6f6;
+}
+
+.mt-4 {
+	margin-top: 4px !important;
+}
+
+.user_list {
+	background: #fff;
+	border-top: #dcdcdc 1px solid;
+}
+
+.user_list li {
+	position: relative;
+	border-bottom: #dcdcdc 1px solid;
+	height: 40px;
+	line-height: 40px;
+}
+
+.user_list li.twoLine {
+	height: 65px;
+}
+
+.user_list li i.user_icon {
+	position: absolute;
+	left: 10px;
+	top: 0;
+	z-index: 1;
+	font-size: 20px;
+	color: #12b7f5;
+}
+
+.user_list li i.icon_arrow {
+	position: absolute;
+	right: 10px;
+	top: 0;
+	z-index: 1;
+	font-size: 20px;
+	color: #12b7f5;
+}
+
+.user_list li a {
+	display: block;
+	font-size: 14px;
+	color: #666;
+	padding-left: 10px;
+}
+
+.user_list li a.font-2 {
+	font-size: 14px;
+	line-height: 30px;
+	max-width: 350px;
+	margin-top: 5px;
+}
+
+.user_list li a:hover {
+	color: #12b7f5;
+}

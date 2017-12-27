@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>卡券接口</title>
+</head>
+<body>
+
+<div class="btn_div">
+    <button id="createCard" class="weui-btn weui-btn_primary">创建卡券</button>
+
+</div>
+<div class="btn_div">
+    <button id="addCard" class="weui-btn weui-btn_primary">添加卡券</button>
+
+</div>
+<div class="btn_div">
+    <button id="chooseCard" class="weui-btn weui-btn_primary">选择卡券</button>
+
+</div>
+<div class="btn_div">
+    <button id="openCard" class="weui-btn weui-btn_primary">打开卡券</button>
+
+</div>
+<div class="btn_div">
+    <button id="consumeCard" class="weui-btn weui-btn_primary">核销卡券</button>
+
+</div>
+
+
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script>
+    var codes = [];
+    var cardId = "p3rQ-w8vaVtagcpNzvidHEnSfzjo";
+    $(function () {
+        var jsApiList = [
+            "addCard",
+            "chooseCard",
+            "openCard"
+
+        ];// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        wx.config({
+            appId: '${appid}', // 必填，公众号的唯一标识
+            timestamp: ${signature.timestamp}, // 必填，生成签名的时间戳
+            nonceStr: '${signature.nonceStr}', // 必填，生成签名的随机串
+            signature: '${signature.signature}',// 必填，签名，见附录1
+            jsApiList: jsApiList
+        });
+
+        wx.ready(function () {
+
+            $('#createCard').on('click', function () {
+                createCard();
+            });
+
+            $('#addCard').on('click', function () {
+                addCard();
+            });
+            $('#chooseCard').on('click', function () {
+                chooseCard();
+            });
+            $('#openCard').on('click', function () {
+                openCard();
+            });
+            $('#consumeCard').on('click', function () {
+                if (codes.length < 1) {
+                    alert('请先使用 chooseCard 接口选择卡券。');
+                    return false;
+                }else {
+                    var code = codes[0];
+                    consumeCard(code);
+                }
+            });
+
+        });
+
+    });
+
+    function createCard() {
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "${requestContext.contextPath}/weixin/card/create",
+            success: function (data) {
+                alert(JSON.stringify(data));
+                if (data.status == '1' && data.code == '200') {
+                    //成功
+                    var datas = data.datas;
+                    var cardId = datas[0];
+                    alert(cardId);
+
+                } else {
+                    alert(data.errorMessage);
+                }
+            },
+            error: function (data) {
+
+                alert(data.errorMessage);
+            }
+        });
+
+    }
+
+    /**核销卡券*/
+    function consumeCard(code) {
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "${requestContext.contextPath}/weixin/card/consume?code="+code,
+            success: function (data) {
+                alert(JSON.stringify(data));
+                if (data.status == '1' && data.code == '200') {
+                    //TODO 成功
+
+                } else {
+                    alert("失败:"+data.errorMessage);
+                }
+            },
+            error: function (data) {
+
+                alert("错误:"+data.errorMessage);
+            }
+        });
+
+    }
+
+    function addCard() {
+        wx.addCard({
+            cardList: [
+                {
+                    cardId: cardId,
+                    cardExt: '{ "timestamp":"${addCardSignature.timestamp}","nonce_str":"${addCardSignature.nonceStr}","signature":"${addCardSignature.signature}"}'
+                }
+            ],
+            success: function (res) {
+                alert('已添加卡券：' + JSON.stringify(res.cardList));
+            },
+            cancel: function (res) {
+                alert("已取消"+JSON.stringify(res))
+            }
+        });
+    }
+    function chooseCard() {
+        wx.chooseCard({
+            timestamp: ${chooseCardSignature.timestamp},
+            cardType:'MEMBER_CARD',
+            nonceStr: '${chooseCardSignature.nonceStr}',
+            cardSign: '${chooseCardSignature.signature}',
+            success: function (res) {
+                var cardList =  JSON.parse(res.cardList);
+                var encrypt_code = cardList[0].encrypt_code;
+                alert('已选择卡券：' + encrypt_code);
+                decryptCode(encodeURIComponent(encrypt_code), function (code) {
+                    alert(code);
+                    codes.push(code);
+                });
+            },
+            fail:function (res) {
+
+                alert("失败："+JSON.stringify(res));
+            },
+            cancel: function (res) {
+                alert(JSON.stringify(res))
+            }
+        });
+    }
+    function openCard() {
+        if (codes.length < 1) {
+            alert('请先使用 chooseCard 接口选择卡券。');
+            return false;
+        }
+        var cardList = [];
+        for (var i = 0; i < codes.length; i++) {
+            cardList.push({
+                cardId: cardId,
+                code: codes[i]
+            });
+        }
+        wx.openCard({
+            cardList: cardList,
+            cancel: function (res) {
+                alert(JSON.stringify(res))
+            }
+        });
+    }
+
+    function createCard() {
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "${requestContext.contextPath}/weixin/card/create",
+            success: function (data) {
+                alert(JSON.stringify(data));
+                if (data.status == '1' && data.code == '200') {
+                    //成功
+                    var datas = data.datas;
+                    var cardId = datas[0];
+                    alert(cardId);
+
+                } else {
+                    alert(data.errorMessage);
+                }
+            },
+            error: function (data) {
+
+                alert(data.errorMessage);
+            }
+        });
+
+    }
+    function decryptCode(encrypt_code, callback) {
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "${requestContext.contextPath}/weixin/card/decrypt_code?encrypt_code="+encodeURIComponent(encrypt_code),
+            success: function (data) {
+                alert(JSON.stringify(data));
+                if (data.status == '1' && data.code == '200') {
+                    //成功
+                    var datas = data.datas;
+                    var code = datas[0].code;
+                    callback(code);
+
+                } else {
+                    alert(data.errorMessage);
+                }
+            },
+            error: function (data) {
+
+                alert(data.errorMessage);
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>

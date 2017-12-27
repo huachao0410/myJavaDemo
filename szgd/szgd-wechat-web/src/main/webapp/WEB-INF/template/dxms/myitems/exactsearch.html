@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="../../../../resources/template/common/lib/jquery.weui-1.2.0/lib/weui.css" />
+	<link rel="stylesheet" type="text/css" href="../../../../resources/template/common/lib/jquery.weui-1.2.0/css/jquery-weui.css">
+	<link rel="stylesheet" type="text/css" href="../../../../resources/template/dxms/myitems/css/base.css" />
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="../../../../resources/template/dxms/myitems/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="../../../../resources/template/dxms/myitems/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="../../../../resources/template/dxms/myitems/js/bootstrap.min.js"></script>
+	<script src="../../../../resources/template/common/lib/jquery.weui-1.2.0/lib/jquery-2.1.4.js"></script>
+	<script src="$../../../../resources/template/common/lib/jquery.weui-1.2.0/js/jquery-weui.js"></script>
+
+	<script type="text/javascript">
+		$(function() {
+				$("#bidtimebtn").click(function() {
+						$.post("${requestContext.contextPath}/weixin/myitems/queryitemsbytime", {
+								openid: "00001",
+								bidtime: bidtime
+							},
+							function(data) {
+								var html = '';
+								html += '<table id="myitemsTable" cellspacing="0" cellspacing="0" border="0" style="width:100%;">';
+
+								for(var i = 0; i < data.length; i++) {
+									var item = data[i];
+
+									html += '<tr>';
+									html += '<td align="center" style="width:100%;padding-top:2%;padding-left:2%;padding-right:2%;" >';
+									html += '<div style="width:96%;background:#fff;border-right:2px solid #E4E4E4;border-bottom:2px solid #E4E4E4;">'
+									html += '<table cellspacing="0" cellspacing="0" border="0" style="width:100%;border:1px solid #02b4ed;">';
+									html += '<tr>';
+									html += '<td align="left" colspan="2" style="font-weight:bold;font-size:22px;color:#02b4ed;width:100%;padding:2%;">';
+									html += item.itemsname;
+									html += '</td>';
+									html += '</tr>';
+									html += '<tr>';
+									html += '<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">';
+									html += '<b>申办流水：</b>' + item.bidid + '&nbsp;<b>申办时间：</b>' + item.bidtime;
+									html += '</td>';
+									html += '</tr>';
+									html += '<tr>';
+									html += '<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">';
+									html += '<b>办理部门：</b>' + item.dept + '&nbsp;<b>状态：</b>' + item.status;
+									html += '</td>';
+									html += '</tr>';
+									html += '</table>';
+									html += '</div>';
+									html += '</td>';
+									html += '</tr>';
+								}
+								html += '</table>';
+
+								$("#mainDiv").html(html);
+							},
+							error: function(error) {
+								myAlert(error);
+							}
+						});
+
+				}, "json");
+
+			$("#bididbtn").click(function() {
+					$.post("${requestContext.contextPath}/weixin/myitems/queryitemsbybidid", {
+							openid: "00001",
+							bidid: bidid
+						},
+						function(data) {
+							var html = '';
+							html += '<table id="myitemsTable" cellspacing="0" cellspacing="0" border="0" style="width:100%;">';
+							html += '<tr>';
+							html += '<td align="center" style="width:100%;padding-top:2%;padding-left:2%;padding-right:2%;" >';
+							html += '<div style="width:96%;background:#fff;border-right:2px solid #E4E4E4;border-bottom:2px solid #E4E4E4;">'
+							html += '<table cellspacing="0" cellspacing="0" border="0" style="width:100%;border:1px solid #02b4ed;">';
+							html += '<tr>';
+							html += '<td align="left" colspan="2" style="font-weight:bold;font-size:22px;color:#02b4ed;width:100%;padding:2%;">';
+							html += item.itemsname;
+							html += '</td>';
+							html += '</tr>';
+							html += '<tr>';
+							html += '<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">';
+							html += '<b>申办流水：</b>' + item.bidid + '&nbsp;<b>申办时间：</b>' + item.bidtime;
+							html += '</td>';
+							html += '</tr>';
+							html += '<tr>';
+							html += '<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">';
+							html += '<b>办理部门：</b>' + item.dept + '&nbsp;<b>状态：</b>' + item.status;
+							html += '</td>';
+							html += '</tr>';
+							html += '</table>';
+							html += '</div>';
+							html += '</td>';
+							html += '</tr>';
+							html += '</table>';
+
+							$("#mainDiv").html(html);
+						},
+						error: function(error) {
+							myAlert(error);
+						}
+					});
+
+			}, "json");
+
+		$("#itemsnamebtn").click(function() {
+			$.post("${requestContext.contextPath}/weixin/myitems/queryitemsbyitemsname", {
+					openid: "00001",
+					itemsname: itemsname
+				},
+				function(data) {
+					var html = '';
+					html += '<table id="myitemsTable" cellspacing="0" cellspacing="0" border="0" style="width:100%;">';
+					html += '<tr>';
+					html += '<td align="center" style="width:100%;padding-top:2%;padding-left:2%;padding-right:2%;" >';
+					html += '<div style="width:96%;background:#fff;border-right:2px solid #E4E4E4;border-bottom:2px solid #E4E4E4;">'
+					html += '<table cellspacing="0" cellspacing="0" border="0" style="width:100%;border:1px solid #02b4ed;">';
+					html += '<tr>';
+					html += '<td align="left" colspan="2" style="font-weight:bold;font-size:22px;color:#02b4ed;width:100%;padding:2%;">';
+					html += item.itemsname;
+					html += '</td>';
+					html += '</tr>';
+					html += '<tr>';
+					html += '<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">';
+					html += '<b>申办流水：</b>' + item.bidid + '&nbsp;<b>申办时间：</b>' + item.bidtime;
+					html += '</td>';
+					html += '</tr>';
+					html += '<tr>';
+					html += '<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">';
+					html += '<b>办理部门：</b>' + item.dept + '&nbsp;<b>状态：</b>' + item.status;
+					html += '</td>';
+					html += '</tr>';
+					html += '</table>';
+					html += '</div>';
+					html += '</td>';
+					html += '</tr>';
+					html += '</table>';
+
+					$("#mainDiv").html(html);
+				},
+				error: function(error) {
+					myAlert(error);
+				}
+			});
+
+		}, "json");
+		};
+	</script>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>精确查询</title>
+	</head>
+	<style type="text/css">
+		.img_css {
+			width: 40px;
+			height: 50px;
+		}
+		
+		.img_css4 {
+			width: 36px;
+			height: 50px;
+			margin-left: 3px;
+			padding-right: 1px;
+		}
+		
+		.weui-footer_fixed-bottom {
+			bottom: 1em;
+		}
+	</style>
+
+	<body class="bg-ef" style="font-size: 17px; line-height: 2.7">
+		<img style="vertical-align: bottom;" class="wi-100"
+		src="../../../../resources/template/dxms/myitems/img/banner.png" />
+		<table id="exactsearchTable" cellspacing="0" cellspacing="0" border="0" style="width:100%;">
+			<tr>
+				<td align="center" style="width:100%;padding-top:2%;padding-left:2%;padding-right:2%;">
+					<div style="width:96%;background:#fff;border-right:2px solid #E4E4E4;border-bottom:2px solid #E4E4E4;">'
+						<table cellspacing="0" cellspacing="0" border="0" style="width:100%;border:1px solid #02b4ed;">
+							<form id="bidtimeform" action="#" method="post">
+								<tr>
+									<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">
+										<b>办理时间段：</b><input id="bidtime" type="text" name="bidtime" />
+									</td>
+								</tr>
+								<tr>
+									<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">
+										<b>申办流水号：</b><input id="bidid" type="text" name="bidid" />
+									</td>
+								</tr>
+								<tr>
+									<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">
+										<b>事项名称：</b><input id="itemsname" type="text" name="itemsname" />
+									</td>
+								</tr>
+								<tr>
+									<td align="center" style="width:50%;padding-bottom:2%;">
+										<button type="button" id="bidtimebnt" style="width:100px; height: 40px;">查询</button>
+									</td>
+									<td align="center" style="width:50%;padding-bottom:2%;">
+										<button type="reset" style="width:100px; height: 40px;">重置</button>
+									</td>
+								</tr>
+							</form>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<!--页脚start-->
+		<div class="weui-footer weui-footer_fixed-bottom col-red">
+			<a href="#" class="weui-footer__text"></a>
+		</div>
+		<!--页脚end-->
+		<input type="hidden" name="category" id="category" value="" />
+	
+		<!-- 按钮设置 -->
+		<div class="btn-group navbar-fixed-bottom">
+			<button id="unfinisheditems" type="button" class="btn btn-default"
+				name="unfinisheditems">在办事项</button>
+			<button id="finisheditems" type="button" class="btn btn-default"
+				name="finisheditems">已办事项</button>
+			<button id="exactsearch" type="button" class="btn btn-default"
+				name="exactsearch" onClick="javascript : exactsearch();" >精确查询</button>
+		</div>
+	</body>
+
+</html>

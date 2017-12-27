@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>登录</title>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+</head>
+<style type="text/css">
+    label.error {
+        position: absolute;
+        right: 10px;
+        top: 0;
+        z-index: 999;
+        height: 40px;
+        line-height: 40px;
+        color: red;
+        font-size: 12px;
+    }
+
+</style>
+
+<body class="login_bg">
+<!--登录-->
+<div class="login_div pt-50">
+    <div class="login_tx">
+        <img src="${requestContext.contextPath}/resources/template/cms/default/images/tx.jpg" alt=""/>
+    </div>
+    <form action="${requestContext.contextPath}/account/logon" method="post" class="form form-horizontal" id="formLogin">
+        <div class="form_outside_div mt-50">
+            <div class="form_div">
+                <i class="icon Hui-iconfont">&#xe60d;</i>
+                <input type="text" class="form_input_text" placeholder="用户名" id="username" name="username"/>
+            </div>
+            <div class="form_div">
+                <i class="icon Hui-iconfont">&#xe60e;</i>
+                <input type="password" name="password" id="password" class="form_input_text" placeholder="密码"/>
+            </div>
+        </div>
+        <div class="btn_div">
+            <input class="btn_blue" type="submit" value="登录" id="submitBtn" >
+        </div>
+        <div class="btn_div">
+            <span id="error"></span>
+        </div>
+    </form>
+    <div class="h-60">
+        <div class="login_footer">
+            <a class="forgot_a fl" href="#">忘记密码？</a>
+            <a class="register_a fr"
+               href="${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/register">注册</a>
+        </div>
+    </div>
+</div>
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script>
+    $(function(){
+
+
+        $('#username').focus();
+        $('#formLogin').submit(function(evt) {
+            if ($('#username').val().length == 0) {
+                $("#error").html("用户名不能为空");
+                return false;
+            } else if ($('#password').val().length == 0) {
+                $("#error").html("密码不能为空");
+                return false;
+            }
+
+            $("#password").val(hex_md5($("#password").val()));
+            return true;
+        });
+
+
+    });
+    //初始化页面
+
+</script>
+</body>
+
+
+</html>

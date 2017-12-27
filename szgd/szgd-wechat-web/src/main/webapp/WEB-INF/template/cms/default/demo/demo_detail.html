@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>功能页</title>
+		<#include "../../../include/head_meta.xhtml"/>
+	    <#include "../style.xhtml"/>
+
+
+	    <script>!function(e){function t(a){if(i[a])return i[a].exports;var n=i[a]={exports:{},id:a,loaded:!1};return e[a].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=window;t["default"]=i.flex=function(e,t){var a=e||100,n=t||1,r=i.document,o=navigator.userAgent,d=o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),l=o.match(/U3\/((\d+|\.){5,})/i),c=l&&parseInt(l[1].split(".").join(""),10)>=80,p=navigator.appVersion.match(/(iphone|ipad|ipod)/gi),s=i.devicePixelRatio||1;p||d&&d[1]>534||c||(s=1);var u=1/s,m=r.querySelector('meta[name="viewport"]');m||(m=r.createElement("meta"),m.setAttribute("name","viewport"),r.head.appendChild(m)),m.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+u+",maximum-scale="+u+",minimum-scale="+u),r.documentElement.style.fontSize=a/2*s*n+"px"},e.exports=t["default"]}]);
+    flex(100, 1);</script>
+	   <!--  <script>
+	    document.documentElement.style.fontSize = window.innerWidth/3.75 + 'px';
+	    </script> -->
+    <style>
+		body{}
+    </style>
+
+	</head>
+
+	<body class="bg-f6">
+		<!--title-->
+		<div class="title_img_div">
+			<img class="title_img" src="${requestContext.contextPath}/resources/template/cms/default/images/demo/img1.jpg" alt="" />
+			<div class="title_div">
+				<span class="title_icon"><img src="${requestContext.contextPath}/resources/template/cms/default/images/icon_img.png" /></span>
+				<b class="title_b overflow_hid">活动1活动1活动1</b>
+				<span class="title_span">活动状态：<font class="green">已过期</font></span>
+			</div>
+		</div>
+		<!--content-->
+		<div class="content_div">
+			<!--modal1-->
+			<div class="activety_state">
+				<div class="weui-grids">
+				    <div class="weui-grid js_grid" data-id="button" style="width: 50%">
+				        <div class="weui_grid_icon"  >
+				        	<span class="circle"><img src="${requestContext.contextPath}/resources/template/cms/default/images/icon_heart.png" /></span>
+				        	<div class="activety_people">
+				        		<b>1222,222</b>
+				        		<span class="gray_span"><span class="bg_red" style="width:70%"></span></span>
+				        	</div>
+				        </div>
+				        <p class="activity_text">今日获得关注</p>
+				        
+				    </div> 
+				    <div class="weui-grid js_grid js_grid_fr" data-id="button" style="width: 50%">
+				        <div class="weui_grid_icon"  >
+				           <span class="circle"><img src="${requestContext.contextPath}/resources/template/cms/default/images/icon_user1.png" /></span>
+				        	<div class="activety_people">
+				        		<b>1222,222</b>
+				        		<span class="gray_span"><span class="bg_green" style="width:70%"></span></span>
+				        	</div>
+				        </div>
+				        <p class="activity_text">今日参与人数</p>
+				    </div> 
+
+
+				</div>
+			</div>
+			<div class="border-top">
+				<div class="activity_title">活动简介</div>
+				<div class="activety_info">这里使用jQuery实现的文字展开折叠效果，点击文字后文字内容会完整的显示出来，控制段落来显示文字，不需要的时候，可以再次点击后将内容折叠起来，也就是隐藏了一部分内容。点击查看更多的功能，在很多大网站都有在用，像一些电影简介、产品介绍有时候为了页面的布局效果，常常默认是隐藏了一部分，用户想看的时候可以点击后展开</div>
+				
+			</div>
+			<div class="border-top pb-15m">
+				<div class="activity_title">参加活动</div>
+				<div class=""><a class="activety_a" href="#">参加活动</a></div>
+				
+				<!---->
+			</div>
+
+
+
+		</div>
+		<div class="btn_div_outside">
+			<div class="btn_div">
+				<input type="button" class="sub_btn1" value="参与活动" disabled="disabled">
+			</div>
+		</div>
+		
+		
+		<#include "../../../include/head_js.xhtml"/>
+		<#include "../default_head_js.xhtml"/>
+		<script>
+			$(function () {
+				//简介展开
+
+				 $("div.activety_info").each(function(){
+		            var maxwidth=40;//设置最多显示的字数
+		            var text=$(this).text();
+		            if($(this).text().length>maxwidth){
+		                $(this).text($(this).text().substring(0,maxwidth));
+		                $(this).html($(this).html()+"..."+"<a href='###'> 展开</a>");//如果字数超过最大字数，超出部分用...代替，并且在后面加上点击展开的链接；
+
+		            };
+		            $(this).find("a").click(function(){
+		                $(this).parent().text(text);//点击“点击展开”，展开全文
+		            })
+		        })
+				
+			});
+
+
+		</script>
+	</body>
+	
+
+</html>

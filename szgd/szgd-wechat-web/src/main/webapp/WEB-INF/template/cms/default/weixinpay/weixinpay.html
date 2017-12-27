@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>微信支付</title>
+</head>
+<body>
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+
+
+<div class="weui-cells">
+    <a class="weui-cell weui-cell_access" href="${requestContext.contextPath}/weixin/cms/pay?template=default&path=/weixinpay/gzhpay">
+        <div class="weui-cell__bd">
+            <p>公众号支付</p>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+    </a>
+    <a class="weui-cell weui-cell_access" href="${requestContext.contextPath}/weixin/cms/pay?template=default&path=/weixinpay/nativepay-order">
+        <div class="weui-cell__bd">
+            <p>扫码支付</p>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+    </a>
+    <a class="weui-cell weui-cell_access" href="javascript:;">
+        <div class="weui-cell__bd">
+            <p>刷卡支付</p>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+    </a>
+    <a class="weui-cell weui-cell_access" href="${requestContext.contextPath}/weixin/cms/pay?template=default&path=/weixinpay/mwebpay">
+        <div class="weui-cell__bd">
+            <p>H5支付</p>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+    </a>
+    <a class="weui-cell weui-cell_access" href="javascript:;">
+        <div class="weui-cell__bd">
+            <p>APP支付</p>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+    </a>
+    <a class="weui-cell weui-cell_access" href="javascript:;">
+        <div class="weui-cell__bd">
+            <p>小程序支付</p>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+    </a>
+
+</div>
+</body>
+</html>

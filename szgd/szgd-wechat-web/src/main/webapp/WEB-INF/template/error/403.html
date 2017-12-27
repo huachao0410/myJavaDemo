@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>403</title>
+		<#include "../include/head_meta.xhtml">
+		<#include "../include/head_css.xhtml">
+	</head>
+	<style type="text/css">
+		.errow_img{
+			margin: 50px 0; text-align: center;
+		}
+		.errow_img img{max-width: 250px;}
+	</style>
+
+	<body ontouchstart>
+		<div class="errow_img">
+			<img src="${requestContext.contextPath}/resources/template/common/images/403.png" />
+		</div>
+		<#include "../include/head_js.xhtml">
+		<script>
+			$(function() {
+				
+				$('#back').on('click',function(){
+					WeixinJSBridge.call('closeWindow');
+				});
+				
+			});
+		</script>
+	</body>
+</html>

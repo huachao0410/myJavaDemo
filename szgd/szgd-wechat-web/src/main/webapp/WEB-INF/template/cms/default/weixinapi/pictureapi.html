@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>图片接口</title>
+</head>
+<body>
+
+<div class="btn_div">
+    <button id="chooseImage" class="weui-btn weui-btn_primary">选择图片</button>
+</div>
+<div class="btn_div">
+    <button id="uploadImage" class="weui-btn weui-btn_primary">上传图片</button>
+</div>
+<div class="btn_div">
+    <button id="downloadImage" class="weui-btn weui-btn_primary">下载图片</button>
+</div>
+
+
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script>
+
+    $(function () {
+        var jsApiList = [
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage'
+        ] ;// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '${appid}', // 必填，公众号的唯一标识
+            timestamp: ${signature.timestamp}, // 必填，生成签名的时间戳
+            nonceStr: '${signature.nonceStr}', // 必填，生成签名的随机串
+            signature: '${signature.signature}',// 必填，签名，见附录1
+            jsApiList:jsApiList
+        });
+
+        wx.ready(function () {
+            var images = {
+                localId: [],
+                serverId: []
+            };
+            /**上传图片*/
+            $('#chooseImage').on('click', function () {
+                wx.chooseImage({
+                    success: function (res) {
+                        images.localId = res.localIds;
+
+                        /**预览图片*/
+                        wx.previewImage({
+                            current: images.localId[0],
+                            urls: images.localId
+                        });
+
+                    },
+                    fail:function (res) {
+                        alert(JSON.stringify(res));
+                    }
+                });
+
+            });
+            /**上传图片*/
+            $('#uploadImage').on('click', function () {
+                if (images.localId.length == 0) {
+                    alert('请先使用 选择图片 接口选择图片');
+                    return;
+                }
+                var i = 0, length = images.localId.length;
+                images.serverId = [];
+                function upload() {
+                    wx.uploadImage({
+                        localId: images.localId[i],
+                        success: function (res) {
+                            i++;
+                            //alert('已上传：' + i + '/' + length);
+                            images.serverId.push(res.serverId);
+                            if (i < length) {
+                                upload();
+                            }
+                        },
+                        fail: function (res) {
+                            alert(JSON.stringify(res));
+                        }
+                    });
+                }
+                upload();
+            });
+            /**下载图片*/
+            $('#downloadImage').on('click', function () {
+                if (images.serverId.length === 0) {
+                    alert('请先使用 uploadImage 上传图片');
+                    return;
+                }
+                var i = 0, length = images.serverId.length;
+                images.localId = [];
+                function download() {
+                    wx.downloadImage({
+                        serverId: images.serverId[i],
+                        success: function (res) {
+                            i++;
+                            alert('已下载：' + i + '/' + length);
+                            images.localId.push(res.localId);
+                            if (i < length) {
+                                download();
+                            }
+                        }
+                    });
+                }
+                download();
+            });
+        });
+
+    });
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>我的情况</title>
+    <link rel="stylesheet" href="${requestContext.contextPath}/resources/template/common/lib/weui-1.0.0/css/weui.css"/>
+    <link rel="stylesheet" href="${requestContext.contextPath}/resources/template/common/lib/weui-1.0.0/css/dxms.css"/>
+</head>
+<body ontouchstart>
+
+    <div class="container" id="container" style="margin-top: 5px;margin-bottom: 5px;"></div>
+
+    <script type="text/html" id="tpl_home">
+<div class="page">
+    <div class="page__bd page__bd_spacing">
+		<div class="weui-search-bar" id="searchBar" style="margin-top: 5px">
+            <form class="weui-search-bar__form">
+                <div class="weui-search-bar__box">
+                    <i class="weui-icon-search"></i>
+                    <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required/>
+                    <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                </div>
+                <label class="weui-search-bar__label" id="searchText">
+                    <i class="weui-icon-search"></i>
+                    <span>搜索</span>
+                </label>
+            </form>
+            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+        </div>
+		<div class="weui-cells searchbar-result" id="searchResult" style="display: none">
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd weui-cell_primary">
+                    <p style="font-size:13px;color:#0F88EB">实时搜索文本</p>
+                </div>
+            </div>
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd weui-cell_primary">
+                    <p style="font-size:13px;color:#0F88EB">实时搜索文本</p>
+                </div>
+            </div>
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd weui-cell_primary">
+                    <p style="font-size:13px;color:#0F88EB">实时搜索文本</p>
+                </div>
+            </div>
+        </div>
+        <ul style="margin-top: 8px;">
+            <li>
+                <div class="weui-flex js_category">
+                    <p class="weui-flex__item">我有低保资格</p>
+                    <img src="${requestContext.contextPath}/resources/template/dxms/wdqk/img/dibao.svg" alt="">
+                </div>
+                <div class="page__category js_categoryInner">
+                    <div class="weui-cells page__category-content">
+                        <a class="weui-cell weui-cell_access js_item" data-id="button" href="javascript:;">
+                            <div class="weui-cell__bd">
+                                <p style="font-size:13px;color:#0F88EB">我的证件</p>
+                            </div>
+                            <div class="weui-cell__ft"></div>
+                        </a>
+                        <a class="weui-cell weui-cell_access js_item" data-id="input" href="javascript:;">
+                            <div class="weui-cell__bd">
+                                <p style="font-size:13px;color:#0F88EB">我的政策福利</p>
+                            </div>
+                            <div class="weui-cell__ft"></div>
+                        </a>                      
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="weui-flex js_category">
+                    <p class="weui-flex__item">我有退伍光荣证</p>
+                    <img src="${requestContext.contextPath}/resources/template/dxms/wdqk/img/tuiwu.svg" alt="">
+                </div>
+                <div class="page__category js_categoryInner">
+                    <div class="weui-cells page__category-content">
+                        <a class="weui-cell weui-cell_access js_item" data-id="button" href="javascript:;">
+                            <div class="weui-cell__bd">
+                                <p style="font-size:13px;color:#0F88EB">我的证件</p>
+                            </div>
+                            <div class="weui-cell__ft"></div>
+                        </a>
+                        <a class="weui-cell weui-cell_access js_item" data-id="input" href="javascript:;">
+                            <div class="weui-cell__bd">
+                                <p style="font-size:13px;color:#0F88EB">我的政策福利</p>
+                            </div>
+                            <div class="weui-cell__ft"></div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="weui-flex js_category">
+                    <p class="weui-flex__item">我有残疾证</p>
+                    <img src="${requestContext.contextPath}/resources/template/dxms/wdqk/img/canji.svg" alt="">
+                </div>
+                <div class="page__category js_categoryInner">
+                    <div class="weui-cells page__category-content">
+                        <a class="weui-cell weui-cell_access js_item" data-id="button" href="javascript:;">
+                            <div class="weui-cell__bd">
+                                <p style="font-size:13px;color:#0F88EB">我的证件</p>
+                            </div>
+                            <div class="weui-cell__ft"></div>
+                        </a>
+                        <a class="weui-cell weui-cell_access js_item" data-id="input" href="javascript:;">
+                            <div class="weui-cell__bd">
+                                <p style="font-size:13px;color:#0F88EB">我的政策福利</p>
+                            </div>
+                            <div class="weui-cell__ft"></div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+		<!--页脚start-->
+		<div class="weui-msg__extra-area">
+		    <div class="weui-footer">
+		      <p class="weui-footer__links">
+		        <a href="javascript:void(0);" class="weui-footer__link">广东省信息中心</a>
+		      </p>
+		      <p class="weui-footer__text">Copyright © 2017-2020</p>
+		    </div>
+		  </div>
+		<!--页脚end-->
+
+</div>
+<script type="text/javascript">
+    $(function(){
+        var winH = $(window).height();
+        var categorySpace = 10;
+
+        $('.js_item').on('click', function(){
+            var id = $(this).data('id');
+            window.pageManager.go(id);
+        });
+        $('.js_category').on('click', function(){
+            var $this = $(this),
+                $inner = $this.next('.js_categoryInner'),
+                $page = $this.parents('.page'),
+                $parent = $(this).parent('li');
+            var innerH = $inner.data('height');
+            bear = $page;
+
+            if(!innerH){
+                $inner.css('height', 'auto');
+                innerH = $inner.height();
+                $inner.removeAttr('style');
+                $inner.data('height', innerH);
+            }
+
+            if($parent.hasClass('js_show')){
+                $parent.removeClass('js_show');
+            }else{
+                $parent.siblings().removeClass('js_show');
+
+                $parent.addClass('js_show');
+                if(this.offsetTop + this.offsetHeight + innerH > $page.scrollTop() + winH){
+                    var scrollTop = this.offsetTop + this.offsetHeight + innerH - winH + categorySpace;
+
+                    if(scrollTop > this.offsetTop){
+                        scrollTop = this.offsetTop - categorySpace;
+                    }
+
+                    $page.scrollTop(scrollTop);
+                }
+            }
+        });
+    });
+
+$(function(){
+        var $searchBar = $('#searchBar'),
+            $searchResult = $('#searchResult'),
+            $searchText = $('#searchText'),
+            $searchInput = $('#searchInput'),
+            $searchClear = $('#searchClear'),
+            $searchCancel = $('#searchCancel');
+
+        function hideSearchResult(){
+            $searchResult.hide();
+            $searchInput.val('');
+        }
+        function cancelSearch(){
+            hideSearchResult();
+            $searchBar.removeClass('weui-search-bar_focusing');
+            $searchText.show();
+        }
+
+        $searchText.on('click', function(){
+            $searchBar.addClass('weui-search-bar_focusing');
+            $searchInput.focus();
+        });
+        $searchInput
+            .on('blur', function () {
+                if(!this.value.length) cancelSearch();
+            })
+            .on('input', function(){
+                if(this.value.length) {
+                    $searchResult.show();
+                } else {
+                    $searchResult.hide();
+                }
+            })
+        ;
+        $searchClear.on('click', function(){
+            hideSearchResult();
+            $searchInput.focus();
+        });
+        $searchCancel.on('click', function(){
+            cancelSearch();
+            $searchInput.blur();
+        });
+    });
+</script>
+</script>
+    <script type="text/html" id="tpl_button">
+<div class="page">
+
+		<div class="weui-panel__hd">我的证件</div>
+            <div class="weui-panel__bd">
+                <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                   <img src="${requestContext.contextPath}/resources/template/dxms/wdqk/img/zm.png" style="width:100%;margin-top: 8px;"/>
+                </a>
+                <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                    <img src="${requestContext.contextPath}/resources/template/dxms/wdqk/img/fm.png" style="width:100%;margin-top: 8px;"/>
+                </a>
+            </div>
+
+		<!--页脚start-->
+		<div class="weui-msg__extra-area">
+		    <div class="weui-footer">
+		      <p class="weui-footer__links">
+		        <a href="javascript:void(0);" class="weui-footer__link">广东省信息中心</a>
+		      </p>
+		      <p class="weui-footer__text">Copyright © 2017-2020</p>
+		    </div>
+		  </div>
+		<!--页脚end-->
+
+        </div>
+
+</div>
+
+</script>
+  
+    <script type="text/html" id="tpl_input">
+<div class="page">
+    <div class="page__bd">
+        <div class="weui-cells__title">我的政策福利</div>
+        <div class="weui-cells weui-cells_radio">
+            <label class="weui-cell weui-check__label" for="x11">
+                <div class="weui-cell__bd">
+                    <p style="font-size: 13px;">1、残疾、孤老、烈属减征个人所得税</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" name="radio1" id="x11">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x12">
+
+                <div class="weui-cell__bd">
+                    <p style="font-size: 13px;">2、低保及零就业家庭从事个体经营减免个人所得税</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" class="weui-check" id="x12">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label" for="x13">
+
+                <div class="weui-cell__bd">
+                    <p style="font-size: 13px;">3、失业人员从事个体经营减免个人所得税</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" class="weui-check" id="x13">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+        </div>
+ 		<!--页脚start-->
+		<div class="weui-msg__extra-area">
+		    <div class="weui-footer">
+		      <p class="weui-footer__links">
+		        <a href="javascript:void(0);" class="weui-footer__link">广东省信息中心</a>
+		      </p>
+		      <p class="weui-footer__text">Copyright © 2017-2020</p>
+		    </div>
+		  </div>
+		<!--页脚end-->      
+</div>
+<script type="text/javascript">
+    $(function(){
+        var $tooltips = $('.js_tooltips');
+
+        $('#showTooltips').on('click', function(){
+            if ($tooltips.css('display') != 'none') return;
+
+            $('.page.cell').removeClass('slideIn');
+
+            $tooltips.css('display', 'block');
+            setTimeout(function () {
+                $tooltips.css('display', 'none');
+            }, 2000);
+        });
+    });
+</script>
+</script>
+   
+</script>
+    <script type="text/javascript" src="${requestContext.contextPath}/resources/template/common/lib/zepto-1.2.0/zepto.js"></script>
+    <script type="text/javascript" src="${requestContext.contextPath}/resources/template/common/lib/weui-1.0.0/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="${requestContext.contextPath}/resources/template/common/lib/weui-1.0.0/js/weui.min.js"></script>
+    <script type="text/javascript" src="${requestContext.contextPath}/resources/template/common/lib/weui-1.0.0/js/dxms.js"></script>
+</body>
+</html>

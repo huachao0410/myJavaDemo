@@ -1,0 +1,51 @@
+/*证照查看-2017-04-18--------------------------- */
+.tab_license{position: fixed; top: 0; left: 0; z-index: 111; width: 100%; height: 80px;}
+.tab_license a{padding: 8px 0;}
+.tab_license a:after{border: none;}
+
+.tab_license a img{ margin: 0 auto; display: block;}
+.tab_license a span,.tab_license a b{display: block; font-size: 14px;line-height: 20px;}
+.tab_license a span{color: #888;}
+.tab_license a b{color: #333;font-weight: normal; padding-top: 2px;}
+.tab_license a.weui-bar__item--on{background: #fff;border-bottom: #3366ff 2px solid;}
+.tab_license a.weui-bar__item--on b{color: #3366ff;}
+
+/*证照详情*/
+.title_img{height: 60px; background: #6d3b47; text-align: center;}
+.title_img img{height: 40px; width: auto; margin-top: 10px;}
+.license_table{padding: 10px;}
+.license_table table{ border-top: #767676 1px solid; border-right: #767676 1px solid;}
+.license_table tr td{border-left: #767676 1px solid; border-bottom: #767676 1px solid; font-size: 14px; color: #333; padding: 5px;}
+.td_l{width: 146px; text-align: right;}
+
+.id_card{position: relative; width: 300px; margin: 0 auto;}
+.id_card .id_card_bg{width: 300px !important; height: auto !important;}
+.shuiyin_hkb{ width: 100% !important; height: auto !important; }
+.id_card_issue{position: absolute; left: 50px; top: 132px; z-index: 1; font-size: 13px; color: #000;}
+.id_card_term{position: absolute; left: 50px; top: 152px; z-index: 1; font-size: 13px; color: #000;}
+.id_card1{position: absolute; left: 20px; top: 15px; z-index: 1; width: 272px; height: auto; }
+.id_card1 .id_card_div{margin-bottom: 5px; line-height: 15px;}
+.id_card1 .blue{font-size: 13px; color: #24b2f5;}
+.id_card1 .card_text{font-size: 13px;color: #333; padding: 0 4px;}
+.id_card1 .id_card_img{position: absolute; right: 10px; top: 0; z-index: 11;width: 60px;}
+.id_card1 .id_card_img img{width: 50px !important; height: auto;}
+
+/*验证手机的弹框*/
+.checkphone{padding:30px 0;border-radius:5px;}
+.item{padding: 10px;margin-left:10px;width: 90%;}
+.label_left{line-height:40px;float:left;font-family: "微软雅黑";font-size: small;width: 21%;}
+.label_tips{color: red;font-family: "微软雅黑";font-size: 12px;}
+.input_phone{padding: 3px;border: 1px solid #E0E0E0;height: 30px;width: 75%;}
+.input_vcode{padding: 3px;border: 1px solid #E0E0E0;height: 30px;width: 45%;}
+.input_vcode_btn{height: 25px;text-align: center; color:#1C86EE;border: 2px solid #1C86EE;border-radius: 5px; width: 27%;}
+.weui-btn_blue{background-color:#1C86EE ;}
+/*户口簿水印*/
+.shuiyin_hkb{position: absolute;z-index: 2;top: 100px;background: url(../images/shuiyin_hukouben.png);background-size:100% auto;}
+/*微信绑定提示弹框*/
+.demos-title {
+    text-align: center;
+    font-size: 34px;
+    color: #1c86ee;
+    font-weight: 400;
+    margin: 0 15%;
+}

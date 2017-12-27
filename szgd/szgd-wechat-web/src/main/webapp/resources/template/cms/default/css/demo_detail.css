@@ -1,0 +1,50 @@
+.title_img_div{position: relative;}
+.title_img_div .title_img{width: 100%;}
+.title_img_div .title_div{position: absolute;bottom: -0.4rem; left: 4%;z-index: 1; width: 92%;height: 1.4rem; background: #fff;border-radius: 0.12rem;overflow: hidden;}
+.title_img_div .title_div .title_icon{display: block; position: absolute;left: 0;top: 0;z-index: 1; width: 1.4rem;height: 1.4rem;background: #f24c40;text-align: center;line-height:1.4rem;}
+.title_img_div .title_div .title_icon img{width: 1rem; margin-top: 0.25rem;}
+.title_img_div .title_div .title_b{display: block;margin-top: 0.2rem; margin-left: 1.7rem; margin-right: 0.2rem;line-height: 0.48rem;height: 0.48rem;font-size: 0.34rem;color: #333; font-weight: normal;}
+.title_img_div .title_div .title_span{display: block;height: 0.48rem;margin-left: 1.7rem; line-height: 0.48rem;font-size: 0.28rem;color: #888;}
+.title_img_div .title_div .title_span font{font-weight: bold;}
+/*content*/
+.content_div{width: 92%;margin-left: 4%;margin-top: 0.6rem; background: #fff;border-radius: 0.12rem;}
+
+.activety_state .weui-grids{position: relative;}
+
+.js_grid_fr:before{border-right: none !important;}
+.circle{display: block;position: absolute;left: 0.20rem;top: 0.4rem; z-index: 1; width: 0.80rem;
+	height: 0.8rem;border: #dcdcdc 0.01rem solid;text-align: center;line-height: 0.7rem;
+	border-radius: 100%;}
+.circle img{width: 0.6rem;height: 0.6rem;}
+.activety_people{position: relative;z-index: 9;margin: 0.33rem 0 0 0.7rem; height: 0.52rem;
+	border-radius:0 0.60rem 0.60rem 0;border-left: #fff 0.02rem solid;
+	border-top: #dcdcdc 0.02rem solid;border-bottom: #dcdcdc 0.02rem solid;
+	border-right: #dcdcdc 0.02rem solid;background: #fff;overflow: hidden;}
+
+.activety_people b{position: absolute;left: 0;top: 0.1rem; z-index: 22;width: 90%; margin-left: 1%;text-align: center; font-size: 0.32rem;color: #fff;}
+.activety_people .gray_span{display: block;position: relative; margin: 0.12rem 0.20rem 0 0.1rem; height: 0.3rem; border-radius: 0.20rem;background: #d8d8d8;}
+.activety_people .gray_span span{display: block;position: absolute; left: 0;top: 0;z-index: 1; height: 0.3rem;border-radius: 0.20rem;}
+.red{color: #fc5856}
+.green{color: #41bb72}
+.bg_red{background: #fc5856}
+.bg_green{background: #41bb72}
+.activity_text{padding-top: 0.2rem; text-align: center; font-size: 0.24rem;}
+/*活动简介*/
+.activity_title{display: block;padding: 0.2rem 0.4rem 0.1rem; font-size: 0.32rem;font-weight: bold; color: #333;}
+.activety_info{min-height:1.2rem;line-height:150%;padding:0 0.4rem 0.2rem;font-size: 0.3rem;color: #666;overflow: hidden;}
+.activety_info a{display: block;float: right; margin-top: 0.8rem;color: #12b7f5}
+/*参加活动*/
+.activety_a{display: block;position: relative;margin: 0 0.2rem 0 0.4rem;line-height: 0.60rem; 
+	font-size: 0.3rem;color: #666;
+	background: url(../images/arrow_right.png) no-repeat right center;
+	background-size: auto 0.34rem;
+}
+.pb-15m{padding-bottom: 0.3rem;}
+/*底部按钮*/
+.btn_div_outside{width: 100%;height: 0.92rem; margin-top: 0.2rem;}
+.btn_div_outside .btn_div{position: fixed;bottom: 0;left: 0; z-index: 66;width: 100%;height: 0.92rem;margin: 0;}
+.btn_div_outside .btn_div .sub_btn1{display: block;width: 100%;height: 0.92rem;line-height: 0.92rem;
+	color: #fff;font-size: 0.32rem;text-align: center; background: #10AEFF;border: none;}
+.btn_div_outside .btn_div .sub_btn1:hover{background: #0083c7;}
+.btn_div_outside .btn_div .sub_btn1[disabled="disabled"]{background: #dcdcdc;color: #666;}
+

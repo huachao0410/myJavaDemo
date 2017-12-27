@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>我的收藏</title>
+		<#include "../../../include/head_meta.xhtml"/>
+		<#include "../../../include/head_css.xhtml"/>
+		<#include "../style.xhtml"/>
+	</head>
+	<style type="text/css">
+		
+
+	</style>
+
+	<body class="bg-f6">
+		<!--收藏列表-->
+		<div class="index_news">
+		    <ul id="list" class="index_news_ul">
+		    	
+		    </ul>	
+		</div>
+		<div class="weui-loadmore">
+		    <i class="weui-loading"></i>
+		    <span class="weui-loadmore__tips">正在加载</span>
+		</div>
+		<#include "../../../include/head_js.xhtml"/>
+		<#include "../default_head_js.xhtml"/>
+		<script>
+			var username = getItemData("username");  //获取用户名
+			$(function () {
+        
+				getList(1, 5);
+		        FastClick.attach(document.body);
+		        $(document.body).infinite();
+		        var loading = false;  //状态标记
+		        var page = 1;
+		        var rows = 5;
+		        
+		//      var channelId = channelId;
+		        $(document.body).infinite().on("infinite", function () {
+		            if (loading) return;
+		            loading = true;
+		            setTimeout(function () {
+		                //滚动方法
+		                page = page + 1;
+		                getList(page, rows);  //数据列表
+		                loading = false;
+		            }, 1500);
+		        });
+
+			});
+			 //新闻列表
+		    function getList(page, rows) {
+		
+		        $.ajax({
+		            url: _collection,
+		            type: "get",
+		            data: {
+		                username: username,
+		                page: page,
+		                rows: rows
+		
+		            },
+		            success: function (data) {
+		                if (data.status == 1 && data.code == 200) {
+		                    var html = '';
+		                    var datas = data.datas;
+		                    for (var i = 0 ; i < datas.length; i ++) {
+		                        html += '<li>'
+		                        			+ '<div class="news_div">'
+					                            + '<a class="news_btn" href="#" name="' + datas[i].id + '">'
+					                            	+ '<b class="index_news_title">' + datas[i].title + '</b>'
+					                            	+ '<img class="index_news_img"  src="${requestContext.contextPath}/resources/template/cms/default/images/pic_home_slider_4.jpg"/>'
+					                            + '</a>'
+				                            + '</div>'
+				                            + '<div class="hidden pr-110">'
+				                            	 + '<span class="news_time fl">' + datas[i].releaseDate + '</span>'
+				                            + '</div>'
+				                         + '</li>';
+		                       
+		                    }
+		                     $("#list").append(html);
+		                    var total = data.total;
+		                    if (page * rows > total -1) {
+		                        $(document.body).destroyInfinite();
+		                        $(".weui-loadmore").html('<span class="color-8">没有数据了</span>');
+		                    }
+		
+		                } else {
+		                    alert(data.errorMessage);
+		                }
+		            },
+		            error: function (data) {
+		                console.log(data.errorMessage);
+		            }
+		        });
+		
+		    }
+		    $(document).on('click','.news_btn',function(){
+				var id = $(this).attr('name');
+				window.location.href =  "${requestContext.contextPath}/weixin/cms/open?template=default&path=/news/news_detail&id=" + id;
+			});
+		</script>
+	</body>
+	
+
+</html>

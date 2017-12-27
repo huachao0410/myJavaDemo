@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>新闻页</title>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+</head>
+<style type="text/css">
+
+
+</style>
+
+<body class="bg-f6">
+<!--header-->
+<div class="header_outside">
+    <div class="header">
+        <!--search-->
+        <div class="search_a">
+            <a href="javascript:;"><i class="weui-icon-search"></i>搜索关键词</a>
+        </div>
+
+    </div>
+</div>
+<!--banner-->
+<div class="block_home_slider">
+    <div id="home_slider" class="flexslider">
+        <ul class="slides" id="sliders">
+            <!--<li>
+                <div class="slide">
+                    <img src="${requestContext.contextPath}/resources/template/cms/default/images/pic_home_slider_1.jpg"
+                         alt=""/>
+                </div>
+            </li>
+            <li>
+                <div class="slide">
+                    <img src="${requestContext.contextPath}/resources/template/cms/default/images/pic_home_slider_2.jpg"
+                         alt=""/>
+                </div>
+            </li>
+            <li>
+                <div class="slide">
+                    <img src="${requestContext.contextPath}/resources/template/cms/default/images/pic_home_slider_3.jpg"
+                         alt=""/>
+                </div>
+            </li>
+            <li>
+                <div class="slide">
+                    <img src="${requestContext.contextPath}/resources/template/cms/default/images/pic_home_slider_4.jpg"
+                         alt=""/>
+                </div>
+            </li>-->
+        </ul>
+    </div>
+</div>
+<!--banner end-->
+<div class="index_news">
+	<p class="f-14 border-bottom-f5 pl-10 pt-10 pb-10 f-b" id="newsTitle"></p>
+    <ul id="list" class="index_news_ul">
+
+    </ul>
+
+</div>
+
+
+<div class="weui-loadmore">
+    <i class="weui-loading"></i>
+    <span class="weui-loadmore__tips">正在加载</span>
+</div>
+<!--新闻列表-->
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script src="${requestContext.contextPath}/resources/template/cms/default/js/jquery.flexslider-min.js"></script><!--banner轮播-->
+
+<script>
+	 var channelId = getSearchObj().channelId;  //获取地址栏channelId
+     var siteId = "2";
+    $(function () {
+    	jdt();
+        
+        
+        
+        var title=decodeURI(getSearchObj().title);  //获取栏目名称
+        $("#newsTitle").text(title);
+       
+        
+		getList(siteId, channelId, 1, 10);
+        FastClick.attach(document.body);
+        $(document.body).infinite();
+        var loading = false;  //状态标记
+        var page = 1;
+        var rows = 10;
+        
+//      var channelId = channelId;
+        $(document.body).infinite().on("infinite", function () {
+            if (loading) return;
+            loading = true;
+            setTimeout(function () {
+                //滚动方法
+                page = page + 1;
+                getList(siteId, channelId, page, rows);  //数据列表
+                loading = false;
+            }, 1500);
+        });
+        
+        //搜索跳转
+        $(".search_a a").on('click',function(){
+			window.location.href =  "${requestContext.contextPath}/weixin/cms/open?template=default&path=/news/search&channelId=" + channelId;
+		});
+
+
+    });
+
+    //新闻列表
+    function getList(siteId, channelId, page, rows) {
+
+        $.ajax({
+            url: _newsList,
+            type: "get",
+            data: {
+                siteId: siteId,
+                channelId: channelId,
+                page: page,
+                rows: rows
+
+            },
+             
+            success: function (data) {
+                if (data.status == 1 && data.code == 200) {
+                    var html = '';
+                    var datas = data.datas;
+                    var obj=datas[i];
+                    for (var i = 0 ; i < datas.length; i ++) {
+                    	var obj=datas[i];
+                        html += '<li>'
+                        			+ '<div class="news_div">'
+                        				+ '<div class="news_user">'
+                        					+ '<img class="news_user_img" src="${requestContext.contextPath}/resources/template/cms/default/images/user_img.jpg" />';
+                        					if(obj.author=="" || obj.author==null){
+				                             	html += '<span>匿名 </span>';			
+				                             }else{
+				                             	html += '<span>' + obj.author + '</span>';
+				                             }
+                        					
+                        				html += '</div>'
+			                            + '<a class="news_btn" href="javascript:;" name="' + obj.id + '">';
+			                             if(obj.contentImg!==null){
+			                             	html += '<img class="index_news_img" src="'+obj.contentImg+'" />';			
+			                             }
+			                            	                            	
+			                            	html += '<b class="index_news_title">' + nullChange(obj.title) + '</b>'
+			                            	
+			                            	+ '<span class="index_news_description">' + nullChange(obj.description) + '</span>'
+			                            	+ '<div class="hidden">'
+				                            	 + '<span class="news_time fl">' + nullChange(obj.releaseDate) + '</span>'
+				                           		 + '<span class="news_item fr"><i class="icon Hui-iconfont">&#xe686;</i>' + '('+ nullNumber(obj.commentsDay) +')</span>'
+				                           		 + '<span class="news_item fr mr-10"><i class="icon Hui-iconfont">&#xe697;</i>' + '('+ nullNumber(obj.upsDay) +')</span>'
+				                            + '</div>'
+			                            + '</a>'
+		                            + '</div>'
+		                            
+		                         + '</li>';
+                       
+                    }
+                    $("#list").append(html);
+                    var total = data.total;
+                    if (page * rows > total -1) {
+                        $(document.body).destroyInfinite();
+                        $(".weui-loadmore").html('<span class="color-8">没有数据了</span>');
+                    }
+
+                } else {
+                    alert(data.errorMessage);
+                }
+            },
+            error: function (data) {
+                console.log(data.errorMessage);
+            }
+        });
+
+    }
+    
+	
+	//焦点图
+	function jdt(){	
+		$.ajax({
+			type:"get",
+			url: _newsList,
+			data: {
+				siteId:siteId,
+				channelId: channelId,
+				page:1,
+				rows:10
+			},
+			async:true,
+			success: function(data) {
+				var list = data.datas;
+				var sHtml='';
+				if(list.length) {
+					for(var i = 0; i < list.length; i++) {
+						var obj=list[i];
+						if(obj.isRecommend==1){
+							sHtml +='<li>'
+					                +'<div class="slide">'
+					                   +'<a class="news_btn" href="javascript:;" name="' + obj.id + '"><img src="'+obj.contentImg+'" alt=""/></a>'
+					                +'</div>'
+					            +'</li>';
+						}
+						
+						
+					}
+					
+				} else {
+					sHtml+='<div class="pl-20 pt-5 pb-5 f-14 color-3 lh-22">无</div>';
+				}
+				$("#sliders").html(sHtml);
+				//banner轮播
+		        $('#home_slider').flexslider({
+		            animation: 'slide',
+		            controlNav: true,
+		            directionNav: true,
+		            animationLoop: true,
+		            slideshow: false,
+		            useCSS: false
+		        });
+				
+			}
+		});		
+	}
+	
+	$(document).on('click','.news_btn',function(){
+		var id = $(this).attr('name');
+		window.location.href =  "${requestContext.contextPath}/weixin/cms/open?template=default&path=/news/news_detail&id=" + id;
+	});
+</script>
+</body>
+
+
+</html>

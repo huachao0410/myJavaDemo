@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="szgd-common" />
+        <module name="szgd-console" />
+        <module name="szgd-wechat" />
+        <module name="szgd-wechat-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="szgd" target="1.7" />
+      <module name="szgd-common" target="1.7" />
+      <module name="szgd-console" target="1.7" />
+      <module name="szgd-wechat" target="1.6" />
+      <module name="szgd-wechat-web" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>申请退款</title>
+</head>
+<body>
+
+
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">商品订单号：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="out_trade_no" name="out_trade_no" placeholder="请输入退款商品订单号">
+        </div>
+    </div>
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">订单金额(单位/分)：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="number" name="identityId" value="1" disabled="disabled">
+        </div>
+    </div>
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">退款金额(单位/分)：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="number" name="identityId" value="1" disabled="disabled">
+        </div>
+    </div>
+</div>
+
+<div class="btn_div">
+    <input id="refundBtn" class="btn_blue" type="submit" value="申请退款">
+</div>
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script>
+
+    $(function () {
+
+        $('#refundBtn').on("click", function () {
+            //申请退款处理
+            payRefund();
+        });
+    });
+
+    function payRefund() {
+        $.ajax({
+            async: false,
+            type: "GET",
+            data: {
+                "out_trade_no": $('#out_trade_no').val()
+            },
+            url: "${requestContext.contextPath}/weixin/pay/payrefund/",
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                if (data.status == '1' && data.code == '200') {
+
+                    alert("退款成功！");
+
+                } else {
+                    alert(data.errorMessage);
+                }
+            },
+            error: function (data) {
+                alert(data.errorMessage);
+            }
+        });
+
+
+    }
+
+
+</script>
+
+
+</body>
+</html>

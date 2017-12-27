@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>扫码支付</title>
+    <style>
+
+        .weui-cell_name {
+            width: 180px;
+        }
+
+        .weui-label {
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="content" style="display: block">
+
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell ">
+            <div class="weui-cell__hd weui-cell_name"><label class="weui-label">商品名称：</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" id="username" name="username" value="测试商品" disabled="disabled">
+            </div>
+        </div>
+        <div class="weui-cell ">
+            <div class="weui-cell__hd weui-cell_name"><label class="weui-label">支付金额(单位/分)：</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" id="identityId" name="identityId" value="1" disabled="disabled">
+            </div>
+        </div>
+    </div>
+
+    <div class="btn_div">
+        <input id="payBtn" class="btn_blue" type="submit" value="确定购买">
+    </div>
+
+</div>
+
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+
+<script>
+
+    $(function () {
+
+        getPrepayId();
+
+    });
+
+
+    /**统一下单api接口*/
+    function getPrepayId() {
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "${requestContext.contextPath}/weixin/pay/nativeprepay",
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                if (data.status == '1' && data.code == '200') {
+                    //成功
+                    var datas = data.datas;
+                    var code_url = datas[0].code_url;
+                    var total_fee = datas[0].total_fee;
+                    var out_trade_no = datas[0].out_trade_no;
+                    var url = '${requestContext.contextPath}/weixin/cms/pay?template=default&path=/weixinpay/nativepay';
+
+                    url = url + "&code_url=" + code_url + "&total_fee=" + total_fee + "&out_trade_no=" + out_trade_no;
+                    location.href = url;
+
+                } else {
+                    alert(data.errorMessage);
+                }
+            },
+            error: function (data) {
+                alert(data.errorMessage);
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>
