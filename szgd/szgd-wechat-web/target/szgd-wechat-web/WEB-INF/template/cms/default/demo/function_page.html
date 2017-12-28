@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>功能页</title>
+		<#include "../../../include/head_meta.xhtml"/>
+	    <#include "../style.xhtml"/>
+	    <script>!function(e){function t(a){if(i[a])return i[a].exports;var n=i[a]={exports:{},id:a,loaded:!1};return e[a].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=window;t["default"]=i.flex=function(e,t){var a=e||100,n=t||1,r=i.document,o=navigator.userAgent,d=o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),l=o.match(/U3\/((\d+|\.){5,})/i),c=l&&parseInt(l[1].split(".").join(""),10)>=80,p=navigator.appVersion.match(/(iphone|ipad|ipod)/gi),s=i.devicePixelRatio||1;p||d&&d[1]>534||c||(s=1);var u=1/s,m=r.querySelector('meta[name="viewport"]');m||(m=r.createElement("meta"),m.setAttribute("name","viewport"),r.head.appendChild(m)),m.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+u+",maximum-scale="+u+",minimum-scale="+u),r.documentElement.style.fontSize=a/2*s*n+"px"},e.exports=t["default"]}]);
+    flex(100, 1);</script>
+
+	</head>
+	
+
+	<body class="bg-f6">
+		<!--title-->
+		<div style="height:2.96rem;background-image:url('${requestContext.contextPath}/resources/template/cms/default/images/demo/banner_ggjfw.png'); background-size:100% 2.96rem">
+		    <div class="title_head" style="">
+			    便民服务
+		    </div>
+	    </div>
+	    <!--2列表-->
+	    <div class="weui-grids bg-white">
+	    	<p class="list_title">常用服务</p>
+	    	<div id="serviceCommon"></div>
+	       
+	    </div>
+	    <!--生活服务-->
+	    <div class="weui-cells service_list">
+	    	<p class="list_title2">生活服务</p>
+	    	<div id="service_1"></div>
+		</div>
+		<!--社会保障-->
+	    <div class="weui-cells service_list">
+	    	<p class="list_title2">社会保障</p>
+	    	<div id="service_2"></div>
+			
+		</div>
+		<!--车主服务-->
+	    <div class="weui-cells service_list">
+	    	<p class="list_title2">车主服务</p>
+	    	<div id="service_3"></div>
+			
+		</div>
+	     <!--foorer-->
+		<div class="weui-footer text-center">
+			<p class="weui-footer__links">
+				<a href="javascript:void(0);" class="weui-footer__link">常见问题</a>|<a href="javascript:void(0);" class="weui-footer__link">意见反馈</a>
+			</p>
+		</div>
+		<#include "../../../include/head_js.xhtml"/>
+		<#include "../default_head_js.xhtml"/>
+		<script>
+			$(function () {
+				service();  //栏目
+
+				
+			});
+			function service(){
+				//常用服务
+				serviceCommon();
+				function serviceCommon(){
+					var arr=[
+						{'id':"37",'channelName':"考试升学",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"38",'channelName':"养老金资格认定",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/yljzgrz.png"},
+						{'id':"39",'channelName':"社保服务",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/sbfw.png"},
+						{'id':"40",'channelName':"公积金服务",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/gjjfw.png"}
+					]
+					var sHtml = '';
+					for(var i = 0; i < arr.length; i++) {
+						sHtml += '<a style="width: 25%;" href="#" class="weui-grid js_grid" name="' + arr[i].id + '" title="'+ arr[i].channelName+'">'
+						            +'<div  class="weui-grid__icon">'
+						                +'<img src="' + arr[i].src + '" >'
+						            +'</div>'
+						            +'<p class="weui-grid__label wihte">' + arr[i].channelName + '</p>'
+						        +'</a>';
+					}
+					$('#serviceCommon').html(sHtml);
+				}
+				//生活服务
+				service_1();
+				function service_1(){
+					var arr=[
+						{'id':"37",'channelName':"考试升学",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"38",'channelName':"医疗服务",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/jkgl.png"},
+						{'id':"39",'channelName':"水费缴纳",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/sfjn.png"},
+						{'id':"40",'channelName':"重名查询",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/cmcx.png"}
+					]
+					var sHtml = '';
+					for(var i = 0; i < arr.length; i++) {
+						sHtml += '<a class="weui-cell channel_a" href="#" name="' + arr[i].id + '" title="'+ arr[i].channelName+'">'
+									+'<div class="weui-cell__hd">'
+										+'<img src="' + arr[i].src + '" >'
+									+'</div>'
+									+'<div class="weui-cell__bd">'
+										+'<p>' + arr[i].channelName + '</p>'
+									+'</div>'
+								+'</a>';
+					}
+					$('#service_1').html(sHtml);
+				}
+				//社会保障
+				service_2();
+				function service_2(){
+					var arr=[
+						{'id':"37",'channelName':"公积金服务",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/gjjfw.png"},
+						{'id':"38",'channelName':"社保服务",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/sbfw.png"},
+						{'id':"39",'channelName':"养老金资格认定",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/yljzgrz.png"}
+					]
+					var sHtml = '';
+					for(var i = 0; i < arr.length; i++) {
+						sHtml += '<a class="weui-cell channel_a" href="#" name="' + arr[i].id + '" title="'+ arr[i].channelName+'">'
+									+'<div class="weui-cell__hd">'
+										+'<img src="' + arr[i].src + '" >'
+									+'</div>'
+									+'<div class="weui-cell__bd">'
+										+'<p>' + arr[i].channelName + '</p>'
+									+'</div>'
+								+'</a>';
+					}
+					$('#service_2').html(sHtml);
+				}
+				//车主服务
+				service_3();
+				function service_3(){
+					var arr=[
+						{'id':"37",'channelName':"车辆年审服务",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/clnsfw.png"},
+						{'id':"38",'channelName':"交通违法查询",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/jtwfcx.png"}
+					]
+					var sHtml = '';
+					for(var i = 0; i < arr.length; i++) {
+						sHtml += '<a class="weui-cell channel_a" href="#" name="' + arr[i].id + '" title="'+ arr[i].channelName+'">'
+									+'<div class="weui-cell__hd">'
+										+'<img src="' + arr[i].src + '" >'
+									+'</div>'
+									+'<div class="weui-cell__bd">'
+										+'<p>' + arr[i].channelName + '</p>'
+									+'</div>'
+								+'</a>';
+					}
+					$('#service_3').html(sHtml);
+				}
+			}
+		</script>
+	</body>
+	
+
+</html>

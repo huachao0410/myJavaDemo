@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>订单结果</title>
+</head>
+<body>
+
+
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <p>付款金额</p>
+        </div>
+        <div id="total_fee" style="font-size: 20px;color: #0d0d0d;font-weight:bold" class="weui-cell__ft"></div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <p>当前状态</p>
+        </div>
+        <div id="trade_state" class="weui-cell__ft"></div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <p>支付时间</p>
+        </div>
+        <div id="time_end" class="weui-cell__ft"></div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <p>支付方式</p>
+        </div>
+        <div id="bank_type" class="weui-cell__ft"></div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <p>交易单号</p>
+        </div>
+        <div id="transaction_id" class="weui-cell__ft"></div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <p>商户单号</p>
+        </div>
+        <div id="out_trade_no" class="weui-cell__ft"></div>
+    </div>
+</div>
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script>
+
+    $(function () {
+
+        var out_trade_no = getQueryString("out_trade_no");
+        orderQuery(out_trade_no);
+    });
+
+    function orderQuery(out_trade_no) {
+        $.ajax({
+            async: false,
+            type: "GET",
+            data:{
+                "orderType":"out_trade_no",
+                "orderNumber":out_trade_no
+            },
+            url: "${requestContext.contextPath}/weixin/pay/orderquery",
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                if (data.status == '1' && data.code == '200') {
+                    isOrderQuery = true;
+                    var datas = data.datas;
+
+                    var bank_type = datas[0].bank_type;
+                    var time_end = datas[0].time_end;
+                    var total_fee = datas[0].total_fee;
+                    var trade_state = datas[0].trade_state;
+                    var out_trade_no = datas[0].out_trade_no;
+                    var transaction_id = datas[0].transaction_id;
+
+                    $('#bank_type').append(bank_type);
+                    $('#time_end').append(time_end);
+                    $('#total_fee').append(total_fee);
+                    $('#trade_state').append(trade_state);
+                    $('#out_trade_no').append(out_trade_no);
+                    $('#transaction_id').append(transaction_id);
+
+                } else {
+                    alert(data.errorMessage);
+                }
+            },
+            error: function (data) {
+                alert(data.errorMessage);
+            }
+        });
+
+
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURI(r[2]);
+        return null;
+    }
+</script>
+
+
+
+</body>
+</html>

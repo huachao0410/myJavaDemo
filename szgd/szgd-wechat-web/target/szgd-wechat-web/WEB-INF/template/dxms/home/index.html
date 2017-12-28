@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="${requestContext.contextPath}/resources/template/common/lib/jquery.weui-1.2.0/lib/weui.css" />
+		<link rel="stylesheet" type="text/css" href="${requestContext.contextPath}/resources/template/common/lib/jquery.weui-1.2.0/css/jquery-weui.css">
+		<link rel="stylesheet" type="text/css" href="${requestContext.contextPath}/resources/template/dxms/wdqk/css/base.css" />
+		<title>底线民生服务平台</title>
+	</head>
+	<style type="text/css">
+		.img_css {
+			width: 40px;
+			height: 50px;
+		}
+		.img_css4 {
+			width: 36px;
+		    height: 50px;
+		    margin-left: 3px;
+		    padding-right: 1px;
+		}		
+	</style>
+
+	<body class="bg-ef" >
+
+		<img style="vertical-align: bottom;" class="wi-100" src="${requestContext.contextPath}/resources/template/dxms/wdqk/img/banner.png" />
+
+		<a id="report" class="weui-cell weui-cell_access bg-white" href="${requestContext.contextPath}/weixin/dxms/wdqk">
+			<div class="weui-cell__hd mr-15"><img src="${requestContext.contextPath}/resources/template/dxms/wdqk/img/1.svg" class="img_css" alt=""></div>
+			<div class="weui-cell__bd weui-cell_primary">
+				<p style="font-size: 16px;">我的情况</p>
+			</div>
+			<span class="weui-cell__ft"></span>
+		</a>
+		<a id="search" class="weui-cell weui-cell_access bg-white" href="html/search.html">
+			<div class="weui-cell__hd mr-15"><img src="${requestContext.contextPath}/resources/template/dxms/wdqk/img/2.svg" class="img_css" alt=""></div>
+			<div class="weui-cell__bd weui-cell_primary">
+				<p style="font-size: 16px;">我的事项</p>
+			</div>
+			<span class="weui-cell__ft"></span>
+		</a>
+		<a id="guide" class="weui-cell weui-cell_access bg-white" href="${requestContext.contextPath}/weixin/fwfl/index">
+			<div class="weui-cell__hd mr-15"><img src="${requestContext.contextPath}/resources/template/dxms/wdqk/img/3.svg" class="img_css" alt=""></div>
+			<div class="weui-cell__bd weui-cell_primary">
+				<p style="font-size: 16px;">服务分类</p>
+			</div>
+			<span class="weui-cell__ft"></span>
+		</a>
+
+		<a id="supply" class="weui-cell weui-cell_before weui-cell_access bg-white" href="${requestContext.contextPath}/weixin/onlinebid/index">
+			<div class="weui-cell__hd mr-15"><img src="${requestContext.contextPath}/resources/template/dxms/wdqk/img/4.svg" class="img_css4" alt=""></div>
+			<div class="weui-cell__bd weui-cell_primary">
+				<p style="font-size: 16px;">在线申办</p>
+			</div>
+			<span class="weui-cell__ft"></span>
+		</a>	
+        
+		<!--页脚start-->
+		<div class="weui-msg__extra-area">
+		    <div class="weui-footer">
+		      <p class="weui-footer__links">
+		        <a href="javascript:void(0);" class="weui-footer__link">广东省信息中心</a>
+		      </p>
+		      <p class="weui-footer__text">Copyright © 2017-2020</p>
+		    </div>
+		  </div>
+		<!--页脚end-->
+				
+	</body>
+	<script src="${requestContext.contextPath}/resources/template/common/lib/jquery.weui-1.2.0/lib/jquery-2.1.4.js"></script>
+	<script src="${requestContext.contextPath}/resources/template/common/lib/jquery.weui-1.2.0/js/jquery-weui.js"></script>
+	<script type="text/javascript">
+		
+		var yopenid = "";
+		
+		$(function() {
+			if(getSearchObj()['code']) {
+				getopenid(getSearchObj()['code']);
+			}
+
+			localStorage.setItem("gid", 1);
+
+		});
+		
+		function supplyInfo(openid){
+			$.ajax({
+				type:"post",
+				url:_getRepterByOpenidUrl,
+				async:false,
+                data:{
+                	openid:openid,              	
+                },
+				success:function(data){
+					data = JSON.parse(data);
+					
+					if(data.flag == 1){
+						$("#supplyInfo").css('display','block');
+					}
+					
+					//分类
+					if(data.category != undefined){
+						$("#category").val(data.category);
+					}
+				},
+                error:function(error){
+                     myAlert(error);
+                }
+			});
+		}
+
+        $("#supply").on('click',function(){
+        	
+        	var infoUrl = "html/Info.html?supply=Y";
+        	var cgy = $("#category").val();//线索分类
+				if(cgy !=undefined && cgy !=""){
+					infoUrl +="&cgyid=" + cgy;
+				}
+				
+        	location.href=infoUrl;
+        })
+	
+	</script>
+
+</html>

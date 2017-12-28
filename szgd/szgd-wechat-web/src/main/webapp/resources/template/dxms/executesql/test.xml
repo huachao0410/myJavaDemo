@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executeSQLInternal>
+	<execute>
+		<executeName>
+			execute001
+		</executeName>
+		<executeSQL>
+			<![CDATA[
+			select id,code,name,category,dept,workingday 
+			from t_online_bid
+			where category like '%${category}%' 
+			]]>
+		</executeSQL>
+	</execute>
+</executeSQLInternal>

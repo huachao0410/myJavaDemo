@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<#include "../../head/head_css.xhtml" />
+	<link rel="stylesheet" type="text/css" href="${requestContext.contextPath}/resources/lib/zTree-3.5.29/css/metroStyle/metroStyle.css"/>
+	<link rel="stylesheet" href="${requestContext.contextPath}/resources/lib/codemirror-5.27.4/lib/codemirror.css">
+	<link href="${requestContext.contextPath}/resources/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+	<title>首页</title>
+	<style type="text/css">
+		.CodeMirror {
+			border: 1px solid #e0e0e0;
+			height: auto;
+		}
+	</style>
+</head>
+<body>
+<header class="navbar-wrapper">
+	<div class="navbar navbar-fixed-top">
+		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">后台管理系统</a>
+			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+				<ul class="cl">
+					<li>超级管理员</li>
+					<li class="dropDown dropDown_hover">
+						<a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+						<ul class="dropDown-menu menu radius box-shadow">
+							<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
+							<li><a href="${requestContext.contextPath}/account/logout">退出系统</a></li>
+						</ul>
+					</li>
+					<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</header>
+<div class="page-container">
+	内容
+</div>
+
+<div class="footer">Copyright 北明软件有限公司 后台管理系统 2017</div>
+<#include "../../head/head_js.xhtml" />
+<script type="text/javascript">
+
+    // 初始化
+    $(function() {
+
+    });
+
+</script>
+</body>
+</html>

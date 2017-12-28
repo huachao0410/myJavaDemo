@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>界面操作接口</title>
+</head>
+<body>
+
+<div class="btn_div">
+    <button id="hideOptionMenu" class="weui-btn weui-btn_primary">隐藏右上角菜单</button>
+
+</div>
+<div class="btn_div">
+    <button id="showOptionMenu" class="weui-btn weui-btn_primary">显示右上角菜单</button>
+
+</div>
+<div class="btn_div">
+    <button id="hideMenuItems" class="weui-btn weui-btn_primary">批量隐藏右上角菜单</button>
+
+</div>
+<div class="btn_div">
+    <button id="showMenuItems" class="weui-btn weui-btn_primary">批量显示右上角菜单</button>
+
+</div>
+<div class="btn_div">
+    <button id="hideAllNonBaseMenuItem" class="weui-btn weui-btn_primary">隐藏所有非基础按钮菜单</button>
+
+</div>
+<div class="btn_div">
+    <button id="showAllNonBaseMenuItem" class="weui-btn weui-btn_primary">显示所有非基础按钮菜单</button>
+
+</div>
+<div class="btn_div">
+    <button id="closeWindow" class="weui-btn weui-btn_primary">关闭当前网页窗口</button>
+
+</div>
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script>
+
+    $(function () {
+        var jsApiList = [
+            'hideOptionMenu',
+            'showOptionMenu',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'closeWindow'
+
+        ] ;// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '${appid}', // 必填，公众号的唯一标识
+            timestamp: ${signature.timestamp}, // 必填，生成签名的时间戳
+            nonceStr: '${signature.nonceStr}', // 必填，生成签名的随机串
+            signature: '${signature.signature}',// 必填，签名，见附录1
+            jsApiList:jsApiList
+        });
+
+
+        /**除基础类外其他都可以操作*/
+        wx.ready(function () {
+
+            /**隐藏右上角菜单*/
+            $('#hideOptionMenu').on('click',function () {
+                hideOptionMenu();
+            });
+
+            /**显示右上角菜单*/
+            $('#showOptionMenu').on('click',function () {
+                showOptionMenu();
+            });
+
+            /**批量隐藏菜单项*/
+            $('#hideMenuItems').on('click',function () {
+                hideMenuItems();
+            });
+
+            /**批量显示菜单项*/
+            $('#showMenuItems').on('click',function () {
+                showMenuItems();
+            });
+
+            /**隐藏所有非基本菜单项*/
+            $('#hideAllNonBaseMenuItem').on('click',function () {
+                hideAllNonBaseMenuItem();
+            });
+
+            /**显示所有被隐藏的非基本菜单项*/
+            $('#showAllNonBaseMenuItem').on('click',function () {
+                showAllNonBaseMenuItem();
+            });
+
+            /**关闭当前窗口*/
+            $('#closeWindow').on('click',function () {
+                closeWindow();
+            });
+        });
+
+    });
+
+
+
+    /**隐藏右上角菜单*/
+    function hideOptionMenu() {
+        wx.hideOptionMenu();
+    }
+    /**显示右上角菜单*/
+    function showOptionMenu() {
+        wx.showOptionMenu();
+    }
+    /**批量隐藏菜单项*/
+    function hideMenuItems() {
+        // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+        wx.hideMenuItems({
+            menuList: [
+                'menuItem:readMode', // 阅读模式
+                'menuItem:share:timeline', // 分享到朋友圈
+                'menuItem:copyUrl' // 复制链接
+            ],
+            success: function (res) {
+                alert('已隐藏“阅读模式”，“分享到朋友圈”，“复制链接”等按钮');
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+    }
+    /**批量显示菜单项*/
+    function showMenuItems() {
+        wx.showMenuItems({
+            menuList: [
+                'menuItem:readMode', // 阅读模式
+                'menuItem:share:timeline', // 分享到朋友圈
+                'menuItem:copyUrl' // 复制链接
+            ],
+            success: function (res) {
+                alert('已显示“阅读模式”，“分享到朋友圈”，“复制链接”等按钮');
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+    }
+    /**隐藏所有非基本菜单项*/
+    function hideAllNonBaseMenuItem() {
+        wx.hideAllNonBaseMenuItem({
+            success: function () {
+                alert('已隐藏所有非基本菜单项');
+            }
+        });
+    }
+    /**显示所有被隐藏的非基本菜单项*/
+    function showAllNonBaseMenuItem() {
+        wx.showAllNonBaseMenuItem({
+            success: function () {
+                alert('已显示所有非基本菜单项');
+            }
+        });
+    }
+    /**关闭当前窗口*/
+    function closeWindow() {
+        wx.closeWindow();
+    }
+
+
+
+</script>
+
+</body>
+</html>

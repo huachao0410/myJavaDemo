@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.bmsoft.dxms.dao.face.IOnlineBidDao">
+  <resultMap id="BaseResultMap" type="cn.com.bmsoft.dxms.domain.OnlineBid">
+    <id column="id" property="id" jdbcType="DECIMAL" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="dept" property="dept" jdbcType="VARCHAR" />
+    <result column="workingDay" property="workingDay" jdbcType="DECIMAL" />
+    <result column="onlineUrl" property="onlineUrl" jdbcType="VARCHAR" />
+    <result column="downloadId" property="downloadId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+   	id,code,name,dept,workingDay,onlineUrl,downloadId
+  </sql>
+  <select id="find" parameterType="Map" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from t_online_bid 
+        where 1 = 1
+        order by id
+    </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_online_bid
+    where id = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_online_bid
+    where id = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="cn.com.bmsoft.dxms.domain.OnlineBid">
+    insert into t_online_bid 
+    (
+    id
+    ,code
+    ,name
+    ,dept
+    ,workingDay
+    ,onlineUrl
+    ,downloadId
+    )
+    values 
+    (
+    #{id,jdbcType=DECIMAL}
+    ,#{code,jdbcType=VARCHAR}
+    ,#{name,jdbcType=VARCHAR}
+    ,#{dept,jdbcType=VARCHAR}
+    ,#{workingDay,jdbcType=DECIMAL}
+    ,#{onlineUrl,jdbcType=VARCHAR}
+    ,#{downloadId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.bmsoft.dxms.domain.OnlineBid">
+    insert into t_online_bid
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="dept != null">
+        dept,
+      </if>
+      <if test="workingDay != null">
+        workingDay,
+      </if>
+      <if test="onlineUrl != null">
+        onlineUrl,
+      </if>
+      <if test="downloadId != null">
+        downloadId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dept != null">
+        #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="workingDay != null">
+        #{workingDay,jdbcType=DECIMAL},
+      </if>
+      <if test="onlineUrl != null">
+        #{onlineUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadId != null">
+        #{downloadId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.bmsoft.dxms.domain.OnlineBid">
+    update t_online_bid
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dept != null">
+        dept = #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="workingDay != null">
+        workingDay = #{workingDay,jdbcType=DECIMAL},
+      </if>
+      <if test="onlineUrl != null">
+        onlineUrl = #{onlineUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadId != null">
+        downloadId = #{downloadId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.bmsoft.dxms.domain.OnlineBid">
+    update t_online_bid
+    set 
+    code = #{code,jdbcType=VARCHAR},
+    name = #{name,jdbcType=VARCHAR},
+    dept = #{dept,jdbcType=VARCHAR},
+    workingDay = #{workingDay,jdbcType=DECIMAL},
+    onlineUrl = #{onlineUrl,jdbcType=VARCHAR},
+    downloadId = #{downloadId,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

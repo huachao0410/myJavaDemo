@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>扫码支付</title>
+    <style>
+
+
+    </style>
+</head>
+<body>
+
+<div align="center" style="vertical-align: middle;margin-top: 100px;">
+
+    <div class="qr_layout" id="qrcode"></div>
+    <div id="tips" style="display: none;margin-top: 20px;">
+
+        <div>
+            <span style="color:#02a0d0 ">请使用微信“扫一扫”，扫描二维码支付</span>
+        </div>
+
+        <div>
+            <p style="color:#02a0d0;font-size: 30px; "></p>
+        </div>
+    </div>
+</div>
+
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+
+<script>
+
+    var isOrderQuery = false;
+    var out_trade_no = getQueryString("out_trade_no");
+    $(function () {
+        var code_url = getQueryString("code_url");
+        var total_fee = '¥ ' + getQueryString("total_fee");
+        if (code_url) {
+            $('#tips').show();
+            makeCode(code_url);
+
+            document.getElementsByTagName("P")[0].innerHTML = total_fee;
+            orderQuery();
+
+        } else {
+            $('#tips').hide();
+        }
+    });
+
+    /**生成二维码*/
+    function makeCode(code_url) {
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: code_url,
+            width: 150,
+            height: 150,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+
+        });
+        qrcode.makeCode(code_url);
+    }
+
+    function orderQuery() {
+        if (!isOrderQuery) {
+            $.ajax({
+                async: false,
+                type: "GET",
+                data:{
+                    "orderType":"out_trade_no",
+                    "orderNumber":out_trade_no
+                },
+                url: "${requestContext.contextPath}/weixin/pay/orderquery",
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == '1' && data.code == '200') {
+                        isOrderQuery = true;
+                        var datas = data.datas;
+                        var url = '${requestContext.contextPath}/weixin/cms/pay?template=default&path=/weixinpay/paynotify';
+                        location.href = url + "&out_trade_no="+out_trade_no;
+
+                    } else {
+                        alert(data.errorMessage);
+                    }
+                },
+                error: function (data) {
+                    alert(data.errorMessage);
+                }
+            });
+            //使用方法回调，每5秒调用一次
+            setTimeout("orderQuery()", 5000);
+        }
+
+    }
+
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURI(r[2]);
+        return null;
+    }
+
+</script>
+</body>
+</html>

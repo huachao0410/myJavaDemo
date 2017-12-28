@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>评论列表</title>
+		<#include "../../../include/head_meta.xhtml"/>
+		<#include "../../../include/head_css.xhtml"/>
+		<#include "../style.xhtml"/>
+	</head>
+	<style type="text/css">
+		
+
+	</style>
+
+	<body>
+		
+		<!--评论-->
+		<div class="comment_div mt-10">
+			<div class="comment_t"><span class="comment_b"><span id="commentCount">0</span> 条评论</span></div>
+			<div class="clear"></div>
+			
+			<!--评论列表-->
+			<ul class="comment_list mt-10" id="commentList">
+				
+			</ul>
+			<div class="weui-loadmore">
+			    <i class="weui-loading"></i>
+			    <span class="weui-loadmore__tips">正在加载</span>
+			</div>
+			
+			
+		</div>
+
+		<#include "../../../include/head_js.xhtml"/>
+		<#include "../default_head_js.xhtml"/>
+		<script>
+			var id = getSearchObj().contentId;  //获取地址栏id
+			var username = getItemData("username");  //获取用户名
+			$(function(){
+			 	praise();//点赞
+			 	
+				//评论列表预加载
+				getList(id, 1, 5);
+		        FastClick.attach(document.body);
+		        $(document.body).infinite();
+		        var loading = false;  //状态标记
+		        var page = 1;
+		        var rows = 5;
+		        //滚动加载
+		        $(document.body).infinite().on("infinite", function () {
+		            if (loading) return;
+		            loading = true;
+		            setTimeout(function () {
+		                //滚动方法
+		                page = page + 1;
+		                getList(id, page, rows);  //数据列表
+		                loading = false;
+		            }, 1500);
+		        });
+			});
+			//评论列表
+		    function getList(contentId, page, rows) {
+		
+		        $.ajax({
+		            url: _comment,
+		            type: "get",
+		            data: {
+		                contentId:id,
+		                page: page,
+		                rows: rows
+		            },
+		            success: function (data) {
+		                if (data.status == 1 && data.code == 200) {
+		                    var html = '';
+		                    var list = data.datas;
+		                  
+		                    for (var i = 0 ; i < list.length; i ++) {
+		                    	var obj=list[i];
+		                        html +='<li>'
+											+'<div class="comment_user_img">'
+												+'<img src="${requestContext.contextPath}/resources/template/cms/default/images/tx.jpg" alt="" />'
+											+'</div>'
+											+'<div class="comment_content">'
+												+'<b class="comment_username">杨科</b>'
+												+'<span class="comment_n">'+nullChange(obj.text)+'</span>'
+												+'<div class="comment_operation">'
+													+'<span class="comment_time fl pr-10">'+nullNumber(obj.createTime)+'</span>'
+													+'<span class="comment_praise fl pr-10" name="'+obj.id+'"><i class="icon Hui-iconfont">&#xe66d;</i></span>'
+													+'<span class="comment_step fl" name="'+obj.id+'"><i class="icon Hui-iconfont">&#xe66e;</i></span>'
+													+'<span class="comment_step_number fr pl-10"><i class="icon Hui-iconfont">&#xe66e;</i> <font class="step_number">'+nullNumber(obj.downs)+'</font></span>'
+													+'<span class="comment_praise_number fr"><i class="icon Hui-iconfont">&#xe66d;</i> <font class="praise_number">'+nullNumber(obj.ups)+'</font></span>'
+												+'</div>'
+											+'</div>'
+										+'</li>';
+		                       
+		                    }
+		                     $("#commentList").append(html);
+		                    var total = data.total;
+		                    $("#commentCount").text(total);
+		                    if (page * rows > total -1) {
+		                        $(document.body).destroyInfinite();
+		                        $(".weui-loadmore").html('<span class="color-8">没有数据了</span>');
+		                    }
+		
+		                } else {
+		                    alert(data.errorMessage);
+		                }
+		            },
+		            error: function (data) {
+		                console.log(data.errorMessage);
+		            }
+		        });
+		
+		    }
+		   
+			
+			//点赞
+			function praise(){
+				
+				//赞
+				$(document).on('click','.comment_praise',function(){
+					var commentId = $(this).attr('name');
+					var _this=$(this);
+					if(username != null && username != '') {
+						var comment_praise_number=$(this).parent().children(".comment_praise_number");
+						var comment_praise_number_font=comment_praise_number.children('font');
+						var n=comment_praise_number_font.text();  //赞总数
+						var number=parseInt(n);
+						if(_this.hasClass('on')){
+							_this.removeClass('on');
+							number-=1;
+							comment_praise_number_font.text(number);
+							
+						}else{
+							
+							$.ajax({
+								type:"post",
+								url: _ups,
+								data:{
+									username:username,
+									commentId:commentId
+								},
+								async:true,
+								success: function(data) {
+									if(data.code=='501'){
+										layer.alert("请5分钟之后再点击");
+									}else if(data.code=='200'){
+										_this.addClass('on');
+										number+=1;
+										comment_praise_number_font.text(number);
+									}
+								},
+								error: function(error) {
+			                        $('#error').html(error);
+								}
+							});
+						}
+						
+					} else {
+						location.href = "${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/login";
+					}
+				});
+				
+				//踩
+				$(document).on('click','.comment_step',function(){
+					var commentId = $(this).attr('name');
+					var _this=$(this);
+					if(username != null && username != '') {
+						var comment_step_number=$(this).parent().children(".comment_step_number");
+						var comment_step_number_font=comment_step_number.children('font');
+						var n=comment_step_number_font.text();  //踩总数
+						var number=parseInt(n);
+						
+						if(_this.hasClass('on')){
+							_this.removeClass('on');
+							number-=1;
+							comment_step_number_font.text(number);   
+							
+						}else{
+							
+							$.ajax({
+								type:"post",
+								url: _downs,
+								data:{
+									username:username,
+									commentId:commentId
+								},
+								async:true,
+								success: function(data) {
+									if(data.code=='501'){
+										layer.alert("请5分钟之后再点击");
+									}else if(data.code=='200'){
+										_this.addClass('on');
+										number+=1;
+										comment_step_number_font.text(number);
+									}
+								},
+								error: function(error) {
+			                        $('#error').html(error);
+								}
+							});
+						}
+						
+					} else {
+						location.href = "${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/login";
+					}
+				});
+				
+			  
+			}
+		</script>
+	</body>
+	
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>注册</title>
+		<#include "../../../include/head_meta.xhtml"/>
+		<#include "../../../include/head_css.xhtml"/>
+		<#include "../style.xhtml"/>
+	</head>
+	<style type="text/css">
+		label.error{position: absolute;right: 10px; top: 0;z-index: 999; height: 40px; line-height: 40px;color: red;
+			font-size: 12px;}
+
+	</style>
+
+	<body class="login_bg">
+		<!--登录-->
+		<div class="login_div pt-50">
+			<div class="login_tx">
+				<img src="${requestContext.contextPath}/resources/template/cms/default/images/tx.jpg" alt="" />
+			</div>
+			<form action="" method="post" class="form form-horizontal" id="formLogin">
+				<div class="form_outside_div mt-50">
+					<div class="form_div">
+						<i class="icon Hui-iconfont">&#xe60d;</i>
+						<input type="text" class="form_input_text" placeholder="用户名" id="loginName" name="loginName" />
+					</div>
+					<div class="form_div">
+						<i class="icon Hui-iconfont">&#xe60e;</i>
+						<input type="password" name="password" id="password" class="form_input_text" placeholder="密码" />
+					</div>
+				</div>
+				<div class="btn_div">
+					<input class="btn_blue" type="submit" value="注册">
+					
+				</div>
+			</form>
+			<div class="login_footer">
+				
+				<a class="register_a fr" href="${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/login">登录</a>
+				<span class="forgot_a fr">已有账号？</span>
+			</div>
+		</div>
+		
+		<#include "../../../include/head_js.xhtml"/>
+		<#include "../default_head_js.xhtml"/>
+		<script>
+			$(function () {
+				$("#formLogin").validate({
+			    	debug:true,
+			    	rules:{
+		     			 loginName: { required: true, minlength: 2 },
+					     password: { required: true, minlength: 5 }
+			    	},
+				    messages: {
+				      loginName: { required: "请输入用户名", minlength: "用户名不能为空" },
+				      password: { required: "请输入密码", minlength: "密码不能为空" }
+				    },
+				    submitHandler: function() {
+				      	$.ajax({
+							data: {
+								loginName: $("#loginName").val(),
+								password: $("#password").val()
+							},
+							traditional: true,
+							type: "post",
+							url: _register,
+							async: false,
+							success: function(data) {
+								if(data.code=='200') {
+									layer.alert("注册成功");
+									location.href = "${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/login";
+								}else{
+									layer.alert("用户名已存在!");
+								}
+								
+							},
+							error: function(error) {
+		                        $('#error').html(error);
+							}
+						});
+				    }
+			    });
+
+
+				
+			});
+		</script>
+	</body>
+	
+
+</html>

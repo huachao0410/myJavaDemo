@@ -26,7 +26,7 @@ public class Myitems implements Serializable {
     private String dept;
 
     // 状态
-    private Boolean status;
+    private String status;
 
     // 办理流水
     private String bidid;
@@ -71,11 +71,11 @@ public class Myitems implements Serializable {
         this.dept = dept == null ? null : dept.trim();
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

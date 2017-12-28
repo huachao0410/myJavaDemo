@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>图片新闻</title>
+		<#include "../../../include/head_meta.xhtml"/>
+		<#include "../../../include/head_css.xhtml"/>
+		<#include "../style.xhtml"/>
+	</head>
+	<style type="text/css">
+		
+
+	</style>
+
+	<body class="bg-f6">
+		<#include "../../../include/default_head.xhtml"/>
+		<!--banner-->
+		<div class="block_home_slider">
+			<div id="home_slider" class="flexslider">
+		    	<ul class="slides">
+		        	<li>
+		            	<div class="slide">
+		                    <img src="${requestContext.contextPath}/resources/template/cms/default/images/pic_home_slider_1.jpg" alt="" />
+		                </div>
+		           </li>
+		            <li>
+		            	<div class="slide">
+		                    <img src="${requestContext.contextPath}/resources/template/cms/default/images/pic_home_slider_2.jpg" alt="" />
+		                </div>
+		            </li>
+		            <li>
+		            	<div class="slide">
+		                    <img src="${requestContext.contextPath}/resources/template/cms/default/images/pic_home_slider_3.jpg" alt="" />
+		                </div>
+		            </li>
+		            <li>
+		            	<div class="slide">
+		                    <img src="${requestContext.contextPath}/resources/template/cms/default/images/pic_home_slider_4.jpg" alt="" />
+		                </div>
+		            </li>
+		        </ul>
+		    </div>
+		</div>
+		<!--banner end-->
+		<!--图片列表-->
+		<div class="mt-5">
+			<ul class="pic_ul">
+				<li>
+					<div class="pic_li">
+						<a href="#">
+							<img width="100%" src="${requestContext.contextPath}/resources/template/cms/default/images/pic_img.jpg" alt="">
+							<b>图片标题</b>
+						</a>
+						<div class="hidden pb-5">
+							<span class="news_item fr"><i class="icon Hui-iconfont">&#xe686;</i> (15)</span>
+							<span class="news_item fr mr-10"><i class="icon Hui-iconfont">&#xe697;</i> (27)</span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="pic_li">
+						<a href="#">
+							<img width="100%" src="${requestContext.contextPath}/resources/template/cms/default/images/pic_img.jpg" alt="">
+							<b>图片标题</b>
+						</a>
+						<div class="hidden pb-5">
+							<span class="news_item fr"><i class="icon Hui-iconfont">&#xe686;</i> (15)</span>
+							<span class="news_item fr mr-10"><i class="icon Hui-iconfont">&#xe697;</i> (27)</span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="pic_li">
+						<a href="#">
+							<img width="100%" src="${requestContext.contextPath}/resources/template/cms/default/images/pic_img.jpg" alt="">
+							<b>图片标题图片标题图片标题图片标题</b>
+						</a>
+						<div class="hidden pb-5">
+							<span class="news_item fr"><i class="icon Hui-iconfont">&#xe686;</i> (15)</span>
+							<span class="news_item fr mr-10"><i class="icon Hui-iconfont">&#xe697;</i> (27)</span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="pic_li">
+						<a href="#">
+							<img width="100%" src="${requestContext.contextPath}/resources/template/cms/default/images/pic_img.jpg" alt="">
+							<b>图片标题</b>
+						</a>
+						<div class="hidden pb-5">
+							<span class="news_item fr"><i class="icon Hui-iconfont">&#xe686;</i> (15)</span>
+							<span class="news_item fr mr-10"><i class="icon Hui-iconfont">&#xe697;</i> (27)</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			 <div class="clear"></div>
+		</div>
+		<#include "../default_footer.xhtml"/>
+		<#include "../../../include/head_js.xhtml"/>
+		<#include "../default_head_js.xhtml"/>
+		<script>
+			$(function () {
+				//banner轮播
+				$('#home_slider').flexslider({
+					animation : 'slide',
+					controlNav : true,
+					directionNav : true,
+					animationLoop : true,
+					slideshow : false,
+					useCSS : false
+				});
+
+
+				
+			});
+		</script>
+	</body>
+	
+
+</html>

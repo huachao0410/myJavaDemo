@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>可在线办理</title>
+	 	<style>
+	 	
+	 	html {
+			height:100%;
+			width:100%;
+			padding: 0;
+			margin: 0; 
+			border: 0; 
+			background: #fff; 
+			overflow: hidden; 
+		}
+		body {
+			height:100%;
+			width:100%;
+			overflow: hidden; 
+			padding: 0; 
+			margin: 0; 
+			border: 0;
+		}
+    	
+    	.btn-guide-panel { display: inline-block;}
+		.btn-guide {text-decoration : none; height: 28px; padding: 9px 15px; font-size: 18px; color: #fff; background: url(${requestContext.contextPath}/resources/template/dxms/onlinebid/btn-guide-bg.png) repeat-x; border-radius: 5px; display: inline-block; margin-right: 5px;}
+		.btn-guide:hover {text-decoration : none; background: url(${requestContext.contextPath}/resources/template/dxms/onlinebid/btn-guide-bg-on.png) repeat-x; color: #fff;}
+		.btn-guide.disabled, .btn-guide.disabled:hover {text-decoration : none; background: url(${requestContext.contextPath}/resources/template/dxms/onlinebid/btn-guide-bg-disabled.png) repeat-x; cursor: default;}
+		.btn-guide img { vertical-align: middle; margin-right: 5px;}
+    	
+    	</style>
+	</head>
+	
+	<body >
+		<div id="mainDiv" style="width:100%;height:100%;overflow:auto;background:#fafafa;">
+			
+		</div>
+		<!--页脚end-->
+		<script src="${requestContext.contextPath}/resources/template/common/lib/jquery.weui-1.0.1/lib/jquery-2.1.4.js"></script>
+		<script>
+			var onlineBidList = [];
+			
+			function attachDowmload(attachId){
+				try{
+					$.ajax({
+						type : "POST",
+						url : "http://www.gdbs.gov.cn/portal/attach/download.do",
+						data: {attachId:attachId},
+						dataType : "jsonp",
+						success : function(data) {
+							if(data.url){
+								var mb = myBrowser();
+								if('IE' == mb){
+									window.location.href = data.url;
+								}else{
+									window.open(data.url,"_blank");
+								}
+							}else{
+								alert("获取不到当前附件下载");
+							}
+						},
+						error: function(XHR, status, errorThrow) {    	       				                               
+                			alert(XHR.responseText);
+                		}
+					});	
+				}catch(e){
+					alert(e.length);
+				}
+			}
+			
+			function myBrowser(){
+			    var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+			    var isOpera = userAgent.indexOf("Opera") > -1;
+			    if (isOpera) {
+			        return "Opera"
+			    }; //判断是否Opera浏览器
+			    if (userAgent.indexOf("Firefox") > -1) {
+			        return "FF";
+			    } //判断是否Firefox浏览器
+			    if (userAgent.indexOf("Chrome") > -1){
+			    	return "Chrome";
+				}
+			    if (userAgent.indexOf("Safari") > -1) {
+			        return "Safari";
+			    } //判断是否Safari浏览器
+			    if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
+			        return "IE";
+			    }; //判断是否IE浏览器
+			}
+		
+			$(function () {
+				
+				onlineBidList = ${list};
+				
+				var html = '';
+				html += '<table id="onlineBidTable" cellspacing="0" cellspacing="0" border="0" style="width:100%;">';
+				for(var i = 0; i < onlineBidList.length; i++){
+					var item = onlineBidList[i];
+					
+					html += '<tr>';
+					html += '<td align="center" style="width:100%;padding-top:2%;padding-left:2%;padding-right:2%;" >';
+					html += '<div style="width:96%;background:#fff;border-right:2px solid #E4E4E4;border-bottom:2px solid #E4E4E4;">'
+					html += '<table cellspacing="0" cellspacing="0" border="0" style="width:100%;border:1px solid #02b4ed;">';
+					html += '<tr>';
+					html += '<td align="left" colspan="2" style="font-weight:bold;font-size:22px;color:#02b4ed;width:100%;padding:2%;">';
+					html += item.name;					
+					html += '</td>';								
+					html += '</tr>';
+					html += '<tr>';
+					html += '<td align="left" colspan="2" style="font-size:14px;color:#1d354d;width:50%;padding:2%;">';
+					html += '<b>主管部门：</b>' + item.dept + '&nbsp;<b>承诺办结时限：</b>' + item.workingDay + '工作日';
+					html += '</td>';
+					html += '</tr>';
+					html += '<tr>';
+					html += '<td align="center" style="width:50%;padding-bottom:2%;">';
+					if(item.onlineUrl && item.onlineUrl.length > 0){
+						html += '<a href="' + item.onlineUrl + '" class="btn-guide" target="_blank">';
+					}else{
+						html += '<a href="#" class="btn-guide disabled">';
+					}		
+					html += '<img src="${requestContext.contextPath}/resources/template/dxms/onlinebid/btn-zxsb.png">';
+					html += '<span>在线办理</span>';
+					html += '</a>';
+					html += '</td>';
+					html += '<td align="center" style="width:50%;padding-bottom:2%;">';
+					if(item.downloadId && item.downloadId.length > 0){
+						//html += '<a href="javascript:attachDowmload(\'' + item.downloadId + '\');" class="btn-guide" target="_blank">';
+						html += '<a href="${requestContext.contextPath}/resources/template/dxms/onlinebid/' + item.downloadId + '.doc" class="btn-guide" target="_blank">';
+					}else{
+						html += '<a href="#" class="btn-guide disabled">';
+					}	
+					html += '<img src="${requestContext.contextPath}/resources/template/dxms/onlinebid/btn-bgxz.png">';
+					html += '<span>表格下载</span>';
+					html += '</a>';
+					html += '</td>';
+					html += '</tr>';
+					html += '</table>';	
+					html += '</div>';
+					html += '</td>';
+					html += '</tr>';	
+				}
+				html += '</table>';
+				
+				$("#mainDiv").html(html);
+			});
+		</script>
+	</body>
+	
+
+</html>

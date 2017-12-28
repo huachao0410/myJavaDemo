@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>共享地址接口</title>
+</head>
+<body>
+
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">结果：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="errMsg" name="errMsg" value="">
+        </div>
+    </div>
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">国家码：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="nationalCode" name="nationalCode" value="">
+        </div>
+    </div>
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">国家：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="countryName" name="countryName" value="">
+        </div>
+    </div>
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">省：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="provinceName" name="provinceName" value="">
+        </div>
+    </div>
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">市：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="cityName" name="cityName" value="">
+        </div>
+    </div>
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">详细：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="detailInfo" name="detailInfo" value="">
+        </div>
+    </div>
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">收货人：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="userName" name="userName" value="">
+        </div>
+    </div>
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">电话：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="telNumber" name="telNumber" value="">
+        </div>
+    </div>
+    <div class="weui-cell ">
+        <div class="weui-cell__hd weui-cell_name"><label class="weui-label">编码：</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="postalCode" name="postalCode" value="">
+        </div>
+    </div>
+
+</div>
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+
+<script>
+
+    $(function () {
+        var jsApiList = [
+            'openAddress'
+        ] ;// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '${appid}', // 必填，公众号的唯一标识
+            timestamp: ${signature.timestamp}, // 必填，生成签名的时间戳
+            nonceStr: '${signature.nonceStr}', // 必填，生成签名的随机串
+            signature: '${signature.signature}',// 必填，签名，见附录1
+            jsApiList:jsApiList
+        });
+
+        wx.ready(function () {
+
+            openAddress();
+        });
+
+    });
+
+
+    function openAddress() {
+        wx.openAddress({
+            trigger: function (res) {
+                alert('用户开始拉出地址');
+            },
+            success: function (res) {
+                alert(JSON.stringify(res));
+                var userName = res.userName; // 收货人姓名
+                var postalCode = res.postalCode; // 邮编
+                var provinceName = res.provinceName; // 国标收货地址第一级地址（省）
+                var cityName = res.cityName; // 国标收货地址第二级地址（市）
+                var countryName = res.countryName; // 国标收货地址第三级地址（国家）
+                var detailInfo = res.detailInfo; // 详细收货地址信息
+                var nationalCode = res.nationalCode; // 收货地址国家码
+                var telNumber = res.telNumber; // 收货人手机号码
+
+                $('#userName').val(userName);
+                $('#postalCode').val(postalCode);
+                $('#provinceName').val(provinceName);
+                $('#cityName').val(cityName);
+                $('#countryName').val(countryName);
+                $('#detailInfo').val(detailInfo);
+                $('#nationalCode').val(nationalCode);
+                $('#telNumber').val(telNumber);
+            },
+            cancel: function (res) {
+                alert(JSON.stringify(res));
+            },
+            fail:function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+    }
+
+
+
+
+</script>
+
+</body>
+</html>

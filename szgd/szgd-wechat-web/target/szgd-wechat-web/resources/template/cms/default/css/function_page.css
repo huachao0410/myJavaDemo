@@ -1,0 +1,56 @@
+/*
+	计算准则
+	x*2/100 然后再偏大偏小调试
+*/
+.title_head{padding-top: 1rem;padding-left: 0.8rem; font-size: 0.7rem;color: #fff;}
+.weui-grids { position: relative;overflow: hidden;}
+.weui-grid { position: relative; float: left; padding: 0.2rem; width: 33.33333333%; box-sizing: border-box; text-decoration: none;}
+.weui-grid__icon {width: 0.8rem;height: 0.8rem;margin: 0 auto;}
+.weui-grid__icon img{width: 100%;}
+.weui-grid__label {height: 0.88rem;margin-top: 0.1rem; display: block;text-align: center; color: #000000; font-size: 0.28rem;
+     white-space: normal;text-overflow: ellipsis; overflow: hidden;
+}
+/*服务列表*/
+.border-bottom-rem{}
+.list_title{padding: 0.2rem 0 0.2rem 0.2rem; font-size: 0.32rem; color: #888;}
+.list_title2{padding: 0.2rem 0 0.13rem 0; margin-bottom: 0.4rem; font-size: 0.32rem; color: #888;border-bottom: #dcdcdc 0.01rem solid;}
+.service_list{padding: 0 0.4rem;margin-top: 0.2rem;
+    background-color: #FFFFFF;
+    font-size: 0.34rem;
+    overflow: hidden;
+    position: relative;}
+.service_list .weui-cell{float: left;display: flex; width: 50%; padding: 0 0 0.2rem;color: #333}
+.service_list .weui-cell:before{border-top: none;}
+.service_list .weui-cell__hd img{display: block;height: 0.5rem; margin-right: 0.1rem;margin-top: -0.08rem;}
+.service_list .weui-cell__bd{text-decoration: none; -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;}
+.service_list .weui-cell__bd p{height: 0.6rem;margin: 0; line-height: 0.3rem; font-size: 0.28rem;
+    overflow:hidden;
+    text-overflow:ellipsis;}
+
+/*.service_list a.channel_a{float: left;position: relative; width: 50%;}
+*/
+
+/*footer*/
+.weui-footer{padding: 0.4rem 0; color: #333; font-size: 0.28rem;}
+.weui-footer a{padding: 0 0.2rem;color: #333;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+       	* WS_DATA_REPORT_SUMMARY (数据填报的概要数据) SQL映射文件
+       	* 
+       	* @作者 admin
+       	* @创建时间 2015-01-30 13:55:28
+       	*
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.bmsoft.dxms.dao.face.IExecuteSQLInternalDao">
+	<select id="executeSelectList" parameterType="Map" resultType="java.util.HashMap">
+        <![CDATA[  
+    		${executeSQL}
+		]]> 
+    </select>
+</mapper>

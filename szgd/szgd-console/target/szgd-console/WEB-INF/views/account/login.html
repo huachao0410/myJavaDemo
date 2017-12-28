@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <#include "../../head/head_css.xhtml" />
+    <title>登录 - ${title}</title>
+    <link href="${requestContext.contextPath}/resources/template/cms/css/login.css" rel="stylesheet"
+          type="text/css"/>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+<input type="hidden" id="TenantId" name="TenantId" value=""/>
+
+<!--<div class="header"></div>-->
+<div class="loginWraper">
+	<div class="register_title">后台管理系统</div>
+	<div class="registerBox pb-25">
+    	<div class="register_confirm">
+    		<b>用户登录</b>
+    	</div>
+    	<div class="row cl">
+    		<div class="col-xs-9 right_border mt-30 mb-30">
+    			<form id="loginForm" class="form form-horizontal" action="${requestContext.contextPath}/account/logon" method="post">
+		            <div class="row cl">
+						<label class="form-label col-xs-2">用户名：</label>
+		
+		                <div class="formControls col-xs-6">
+		                    <input id="username" name="username" type="text" placeholder="账户" class="input-text size-L">
+		                </div>
+		            </div>
+		            <div class="row cl">
+						<label class="form-label col-xs-2">密码：</label>
+		                <div class="formControls col-xs-6">
+		                    <input id="password" name="password" type="password" placeholder="密码" class="input-text size-L">
+		                </div>
+		            </div>
+		            <!--
+		            <div class="row cl">
+		                <div class="formControls col-xs-8 col-xs-offset-3">
+		                    <input class="input-text size-L" type="text" placeholder="验证码"
+		                           onblur="if(this.value==''){this.value='验证码:'}"
+		                           onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
+		                    <img src=""> <a id="kanbuq" href="javascript:;">看不清，换一张</a></div>
+		            </div>
+		            <div class="row cl">
+		                <div class="formControls col-xs-8 col-xs-offset-3">
+		                    <label for="online">
+		                        <input type="checkbox" name="online" id="online" value="">
+		                        使我保持登录状态</label>
+		                </div>
+		            </div>
+		            -->
+		            <div class="row cl">
+		                <div class="formControls col-xs-6 col-xs-offset-2">
+		                    <input id="submitBtn" name="submit" type="submit" class="btn btn-primary form_btn"
+		                           value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+		                </div>
+		            </div>
+		            
+		        </form>
+		       
+    			
+    		</div>
+    		<div class="col-xs-3">
+    			<div class="register_text pt-100">没有账户，点此此<a href="${requestContext.contextPath}/account/register">注册</a></div>
+    		</div>
+    	</div>
+         
+    </div>
+    
+</div>
+<div class="footer">Copyright 北明软件有限公司 后台管理系统 2017</div>
+<#include "../../head/head_js.xhtml" />
+<script type="text/javascript">
+    
+    $(function() {
+        //判断是否被内嵌，则刷新顶层页面
+        if ((parent && parent != self) || (window.document.title.indexOf('登录') < 0)){
+            $('body').css({ visibility: "hidden" });
+            top.window.location.reload();
+            return;
+        }
+
+        $('#username').focus();
+        $('#loginForm').submit(function(evt) {
+            if ($('#username').val().length == 0) {
+                $("#error").html("用户名不能为空");
+                return false;
+            } else if ($('#password').val().length == 0) {
+                $("#error1").html("密码不能为空");
+                return false;
+            }
+
+            $("#password").val(hex_md5($("#password").val()));
+            return true;
+        });
+
+        var errorCode = $.query.get('error');
+        if(errorCode) {
+            $("#error").html("用户名或密码不正确");
+        }
+	});
+
+</script>
+</body>
+</html>

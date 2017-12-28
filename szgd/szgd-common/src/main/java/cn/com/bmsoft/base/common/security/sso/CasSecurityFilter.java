@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.jasig.cas.client.authentication.AttributePrincipal;
+//import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -55,9 +55,9 @@ public class CasSecurityFilter extends SecurityFilter {
         String useraccount = null;
         Map<String, Object> attributes = null;
         try {
-            AttributePrincipal principal = (AttributePrincipal) request.getUserPrincipal();
-            attributes = principal.getAttributes();//返回用户信息
-            useraccount = attributes.get("useraccount").toString();//用户姓名
+//            AttributePrincipal principal = (AttributePrincipal) request.getUserPrincipal();
+//            attributes = principal.getAttributes();//返回用户信息
+//            useraccount = attributes.get("useraccount").toString();//用户姓名
         } catch (Exception e) {
             return;
         }

@@ -1,0 +1,148 @@
+/**
+ * 基础样式，不带业务性质的样式。
+ */
+body{font-family: "微软雅黑";}
+ul{list-style: none;}
+.clear{clear: both;}
+.fl{float: left;}
+.fr{float: right;}
+/*去除苹果默认按钮输入框样式*/
+input[type="button"], input[type="submit"], input[type="reset"] {
+-webkit-appearance: none;
+}
+textarea { -webkit-appearance: none;} 
+/*常用外边界*/
+.no-margin{margin: 0 !important;}
+.margin{margin: 0 auto;}
+/*常用内边距*/
+.no-padding{padding: 0 !important;}
+.pt-100{padding-top: 100px;}
+.pt-150{padding-top: 150px;}
+/*常用的字体*/
+.f-8{font-size:8px}
+.f-12{font-size:12px}
+.f-14{font-size:14px}
+.f-15{font-size:15px}
+.f-16{font-size:16px}
+.f-18{font-size:18px}
+.f-20{font-size:20px}
+.f-22{font-size:20px}
+.f-23{font-size:23px}
+.f-24{font-size:24px}
+.f-26{font-size:26px}
+.f-28{font-size:28px}
+.f-30{font-size:30px}
+.f-36{font-size:36px}
+.f-40{font-size: 40px;}
+.f-50{font-size: 50px;}
+.f-60{font-size: 60px;}
+.f-70{font-size: 70px;}
+.f-w{font-family: "微软雅黑";}
+.f-s{font-family: "宋体";}
+.f-n{font-weight: normal;}
+.bold{font-weight: bold;}
+/*字体浮动方向*/
+.text-center{text-align: center;}
+.text-right{text-align: right;}
+.text-left{text-align: left;}
+
+/*边框*/
+
+/*边框圆角*/
+.no-boder{border: none !important;}
+.border-radius-0{border-radius: 0;}
+.border-radius-2{border-radius: 2px;}
+.border-radius-4{border-radius: 4px;}
+.border-radius-6{border-radius: 6px;}
+.border-radius-8{border-radius: 8px;}
+.border-radius-10{border-radius: 10px;}
+
+/*color*/
+.color-3{color: #333;}
+.color-6{color: #666;}
+.color-9{color: #999;}
+.red{color: red;}
+/*背景色*/
+.no-bg{background: none !important;}
+.bg-f5{background: #f5f5f5;}
+.bg-f0{background: #f0f0f0;}
+/*常用高度*/
+.h-2{height: 2px;}
+.h-15{height: 15px;}
+.h-30{height: 30px;}
+.h-40{height: 40px;}
+.h-42{height: 42px;}
+.h-45{height: 42px;}
+.h-50{height: 50px;}
+.h-55{height: 55px;}
+.h-60{height: 60px;}
+.h-80{height: 80px;}
+.h-85{height: 85px;}
+.h-90{height: 90px;}
+.h-96{height: 96px;}
+.h-100{height: 100px;}
+.h-130{height: 130px;}
+.h-150{height: 150px;}
+.h-200{height: 200px;}
+.h-300{height: 300px;}
+.h-400{height: 400px;}
+.hi-50{height: 50%;}
+.hi-100{height: 100%;}
+.mh-300{min-height: 300px;}
+.mh-400{min-height: 400px;}
+/*常用宽度*/
+.w-30{width: 30px;}
+.w-55{width: 55px;}
+.w-60{width: 60px;}
+.w-70{width: 70px;}
+.w-75{width: 75px;}
+.w-80{width: 80px;}
+.w-90{width: 90px;}
+.w-100{width: 100px !important;}
+.w-110{width: 110px;}
+.w-120{width: 120px;}
+.w-130{width: 130px;}
+.w-140{width: 140px;}
+.w-150{width: 150px;}
+.w-170{width: 170px !important;}
+.w-180{width: 180px !important;}
+.w-190{width: 190px !important;}
+.w-200{width: 200px;}
+.w-210{width: 210px;}
+.w-220{width: 220px;}
+.w-230{width: 230px;}
+.w-240{width: 240px;}
+.w-250{width: 250px;}
+.w-260{width: 260px;}
+.w-270{width: 270px;}
+.w-280{width: 280px;}
+.w-290{width: 290px;}
+.w-300{width: 300px;}
+.wi-33{width: 33%;}
+.wi-50{width: 50%;}
+
+
+
+.wi-100{width: 100% !important;}
+/*常用行高度*/
+.lh-0{line-height: 0px;}
+.lh-16{line-height: 16px;}
+.lh-16{line-height: 16px;}
+.lh-18{line-height: 18px;}
+.lh-20{line-height: 20px;}
+.lh-22{line-height: 22px;}
+.lh-24{line-height: 24px;}
+.lh-26{line-height: 26px;}
+.lh-28{line-height: 28px;}
+.lh-45{line-height: 44px;}
+.lh-50{line-height: 50px;}
+
+
+
+
+
+
+
+
+
+

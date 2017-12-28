@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>信息发布首页</title>
+		<#include "../../include/head_meta.xhtml"/>
+		<script>!function(e){function t(a){if(i[a])return i[a].exports;var n=i[a]={exports:{},id:a,loaded:!1};return e[a].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=window;t["default"]=i.flex=function(e,t){var a=e||100,n=t||1,r=i.document,o=navigator.userAgent,d=o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),l=o.match(/U3\/((\d+|\.){5,})/i),c=l&&parseInt(l[1].split(".").join(""),10)>=80,p=navigator.appVersion.match(/(iphone|ipad|ipod)/gi),s=i.devicePixelRatio||1;p||d&&d[1]>534||c||(s=1);var u=1/s,m=r.querySelector('meta[name="viewport"]');m||(m=r.createElement("meta"),m.setAttribute("name","viewport"),r.head.appendChild(m)),m.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+u+",maximum-scale="+u+",minimum-scale="+u),r.documentElement.style.fontSize=a/2*s*n+"px"},e.exports=t["default"]}]);
+    flex(100, 1);</script>
+   	 <#include "style.xhtml"/>
+	  <style>
+		/*header*/
+.header_outside{width: 100%; height: 1rem;}
+.header{position: fixed;top: 0; left: 0; z-index: 99; width: 100%; height: 1rem; background: #12b7f5;}
+.header .menu_icon_open{display: block; position: absolute;left: 0; top: 0; z-index: 22; width: 1rem;height: 1rem; text-align: center;line-height: 0.8rem; color: #fff; font-size: 0.42rem}
+.header .menu_icon_close{display: none; position: absolute;left: 0; top: 0; z-index: 22; width: 1rem;height: 1rem; text-align: center;line-height: 0.8; color: #fff; font-size: 0.42}
+.blank_bg{display: none; position: fixed; top: 1rem; left: 0; z-index: 999; width: 100%; height: 100%; background: rgba(0,0,0,0.5);}
+.menu{display: none;position: fixed;top: 1rem; left: 0; z-index: 999; width: 100%; min-height: 4.8rem; max-height: 80%; overflow-y: auto; padding-top: 0.4rem; padding-bottom: 0.6rem; background: #354045;}
+.menu a{display: block; width: 100%; height: 1rem; line-height: 1rem; font-size: 0.3rem; color: #fff; padding-left: 0.6rem; box-sizing: border-box;}
+.menu a:hover{color: #869fb1; background: #131e26;}
+.show{display: block;}
+.hide{display: none;}
+
+.header .title{text-align: center;line-height: 1rem;font-size: 0.32rem;color: #fff;}
+.header .login_a{display: block; position: absolute;right: 0; top: 0; z-index: 22; width: 1rem;height: 1rem; text-align: center;line-height: 1rem; color: #fff; font-size: 0.42}
+.header .inedx_a{display: block; position: absolute;right: 0; top: 0; z-index: 22; width:1rem;height: 1rem; text-align: center;line-height: 0.8; color: #fff; font-size: 0.42}
+/*菜单展开收起*/
+.treebox{ width: 100%;}
+.tree_menu{ overflow: hidden;}
+/*第一层*/
+.tree_menu li.level1>a{ 
+	display:block;
+	height: 0.9rem;
+	line-height: 0.9rem;
+	color: #fff;
+	padding-left: 0.6rem;
+	font-size: 0.28rem;
+	position: relative;
+ }
+  /*============小箭头*/
+ .level1 i{ width: 0.4rem; height: 0.4rem; background-image:url(${requestContext.contextPath}/resources/template/cms/default/images/arrow_down.png); background-size: auto 0.26rem; background-repeat: no-repeat; display: block; position: absolute; right:0.2rem; top: 0.32rem; }
+/*.level1 i.menu_arrow{background-image:url(../images/arrow_d.png.png); }*/
+ .tree_menu li.on i.menu_arrow{ background-image:url(${requestContext.contextPath}/resources/template/cms/default/images/arrow_u.png); background-size: auto 0.18rem;}
+  /*第二层*/
+ .tree_menu li ul{ overflow: hidden;padding-bottom: 0.1rem; }
+ 
+ .tree_menu li ul.level2{ display: none;background: #131e26;  }
+ .tree_menu li.on .level2{display: block;}
+ .tree_menu li.on .tree_menu_a{background: #131e26;  }
+ 
+ .tree_menu li ul.level2 li a{
+ 	display: block;
+	height:0.9rem;padding-left: 0.8rem !important;
+	line-height: 0.9rem;
+	color: #fff;
+	text-indent: 1.2rem;
+	/*border-bottom: 1px solid #ddd; */
+	font-size: 0.24rem;
+ }
+
+    </style>
+
+	</head>
+	
+	
+	<body class="bg-f6">
+		<!--header-->
+		<div class="header_outside">
+			<div class="header">
+				<a href="javascript:;" class="menu_icon_open"><img src="${requestContext.contextPath}/resources/template/cms/default/images/icon_menu.png" /></a>
+				<a href="javascript:;" class="menu_icon_close"><img src="${requestContext.contextPath}/resources/template/cms/default/images/icon_close.png" /></a>
+				<div class="title">信息发布系统</div>
+				<a href="#" class="login_a"><img src="${requestContext.contextPath}/resources/template/cms/default/images/icon_user.png" /></a>
+			</div>
+		</div>
+		<!--菜单-->
+		<div class="blank_bg"></div>
+		<div class="menu hide">
+			<a class="on" href="${requestContext.contextPath}/weixin/cms/open?template=default&path=/index">首页</a>
+		    <div class="treebox">
+				<ul class="tree_menu" id="treeMenu">
+					
+				</ul>
+			</div>
+		</div>
+		<!--header end-->
+		<!--title-->
+		<div style="height:2.96rem;background-image:url('${requestContext.contextPath}/resources/template/cms/default/images/demo/banner_ggjfw.png'); background-size:100% 2.96rem">
+		    <div class="title_head">
+			    信息发布系统
+		    </div>
+	    </div>
+		<div class="">
+			<!--园区风貌-->
+		    <div class="weui-cells service_list">
+		    	<p class="list_title2" id="29">园区风貌</p>
+		    	<div id="channel_1"></div>
+			</div>
+			<!--政务公开-->
+		    <div class="weui-cells service_list">
+		    	<p class="list_title2" id="30">政务公开</p>
+		    	<div id="channel_2"></div>
+			</div>
+			<!--招商孵化-->
+		    <div class="weui-cells service_list">
+		    	<p class="list_title2" id="31">招商孵化</p>
+		    	<div id="channel_3"></div>
+			</div>
+			<!--园区服务-->
+		    <div class="weui-cells service_list">
+		    	<p class="list_title2" id="32">园区服务</p>
+		    	<div id="channel_4"></div>
+			</div>
+			<!--高新集团-->
+		    <div class="weui-cells service_list">
+		    	<p class="list_title2" id="33">高新集团</p>
+		    	<div id="channel_5"></div>
+			</div>
+			<!--资讯中心-->
+		    <div class="weui-cells service_list">
+		    	<p class="list_title2" id="63">资讯中心</p>
+		    	<div id="channel_6"></div>
+			</div>
+
+			
+		</div>
+			
+		<!--页脚end-->
+		<#include "default_footer.xhtml"/>
+		<#include "../../include/head_js.xhtml"/>
+		<#include "default_head_js.xhtml"/>
+		<script>
+			$(function () {
+				menu_nav();    //头部菜单
+				channel();  //栏目
+				showUser(); //是否登录
+				
+			});
+			var siteId=2;
+			function menu_nav(){     //头部菜单
+				var $blank_bg=$(".blank_bg");
+				var $menu=$(".menu");
+				var $menu_icon_open=$(".menu_icon_open");
+				var $menu_icon_close=$(".menu_icon_close");
+				$(".menu_icon_open").click(function(){
+					$(this).hide();
+					$blank_bg.show();
+					$menu.addClass("show").removeClass("hide");
+					$menu_icon_close.show();
+				})
+				$(document).on('click',".menu_icon_close, .blank_bg",function(){
+					$blank_bg.hide();
+					$menu_icon_close.hide();
+					$menu.addClass("hide").removeClass("show");
+					$menu_icon_open.show();
+				})
+				//菜单展开收起
+				$(document).on('click',".treebox .level1 .tree_menu_a",function(){
+					var _parent=$(this).parent();
+					if($(_parent).hasClass('on')){
+						_parent.removeClass('on');
+					}else{
+						_parent.addClass('on').siblings().removeClass('on');
+					}
+					 return false; //阻止默认时间
+				});
+				//菜单加载数据
+				channelHeader();
+				//一级栏目
+				function channelHeader(){	
+					$.ajax({
+						type:"get",
+						url: _channel,
+						data: {
+							siteId:siteId,
+							parentId:-1,
+						},
+						async:true,
+						success: function(data) {
+							var list = data.datas;
+							var sHtml='';
+							if(list.length) {
+								for(var i = 0; i < list.length; i++) {
+									var obj=list[i];
+									sHtml +='<li class="level1">'
+												+'<a href="javascript:;" class="tree_menu_a" >'+obj.channelName+'<i class="menu_arrow"></i></a>'
+												+'<ul class="level2" id="tree_menu'+obj.id+'">'
+												+'</ul>'
+											+'</li>';
+									menuHeader(obj.id);
+								}
+							} else {
+								sHtml+='<div class="pl-20 pt-5 pb-5 f-14 color-3 lh-22">无</div>';
+							}
+							$("#treeMenu").html(sHtml);
+						}
+					});		
+				}
+				//二级栏目
+				function menuHeader(ids){
+					$.ajax({
+						type:"get",
+						url: _channel,
+						data: {
+							siteId:siteId,
+							parentId:ids,
+						},
+						async:true,
+						success: function(data) {
+							var listc = data.datas;
+							var sHtml='';
+							if(listc.length) {
+								for(var j = 0; j < listc.length; j++) {
+									var objc=listc[j];
+									sHtml += '<li><a class="channel_a" href="#" title="'+objc.channelName+'" name="'+objc.id+'">'+objc.channelName+'</a></li>';
+								}
+							} else {
+								sHtml+='<div class="pl-20 pt-5 pb-5 f-14 color-3 lh-22">无</div>';
+							}
+							$("#tree_menu"+ids+"").html(sHtml);
+						}
+					});
+				}
+
+				
+
+			}
+			
+			/**
+			 * 是否登录
+			 */
+			function showUser(){
+				
+				$(".login_a").on('click',function(){
+					var username = getItemData("username");
+					if(username != null && username != '') {
+						location.href = "${requestContext.contextPath}/weixin/cms/open?template=default&path=/usercenter/usercenter";
+					} else {
+						location.href = "${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/login";
+					}
+				});
+			}
+			function channel(){
+				//园区风貌
+				channelNav_1();
+				function channelNav_1(){
+					var arr=[
+						{'id':"37",'channelName':"园区概况",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"38",'channelName':"园区规划",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"39",'channelName':"分园介绍",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"40",'channelName':"图说园区",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"41",'channelName':"交通指南",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"}
+					]
+					var sHtml = '';
+					for(var i = 0; i < arr.length; i++) {
+						sHtml += '<a class="weui-cell channel_a" href="#" name="' + arr[i].id + '" title="'+ arr[i].channelName+'">'
+									+'<div class="weui-cell__hd">'
+										+'<img src="' + arr[i].src + '" >'
+									+'</div>'
+									+'<div class="weui-cell__bd">'
+										+'<p>' + arr[i].channelName + '</p>'
+									+'</div>'
+								+'</a>';
+					}
+					$('#channel_1').html(sHtml);
+				}
+				//政务公开
+				channelNav_2();
+				function channelNav_2(){
+					var arr=[
+						{'id':"42",'channelName':"部门机构",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"43",'channelName':"大事记",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"44",'channelName':"信息公开",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"}
+					]
+					var sHtml = '';
+					for(var i = 0; i < arr.length; i++) {
+						sHtml += '<a class="weui-cell channel_a" href="#" name="' + arr[i].id + '" title="'+ arr[i].channelName+'">'
+									+'<div class="weui-cell__hd">'
+										+'<img src="' + arr[i].src + '" >'
+									+'</div>'
+									+'<div class="weui-cell__bd">'
+										+'<p>' + arr[i].channelName + '</p>'
+									+'</div>'
+								+'</a>';
+					}
+					$('#channel_2').html(sHtml);
+				}
+				//招商孵化
+				channelNav_3();
+				function channelNav_3(){
+					var arr=[
+						{'id':"45",'channelName':"招商服务",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"46",'channelName':"最新投资手册",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"47",'channelName':"物业情况",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"48",'channelName':"优惠政策",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"}
+					]
+					var sHtml = '';
+					for(var i = 0; i < arr.length; i++) {
+						sHtml += '<a class="weui-cell channel_a" href="#" name="' + arr[i].id + '" title="'+ arr[i].channelName+'">'
+									+'<div class="weui-cell__hd">'
+										+'<img src="' + arr[i].src + '" >'
+									+'</div>'
+									+'<div class="weui-cell__bd">'
+										+'<p>' + arr[i].channelName + '</p>'
+									+'</div>'
+								+'</a>';
+					}
+					$('#channel_3').html(sHtml);
+				}
+				//园区服务
+				channelNav_4();
+				function channelNav_4(){
+					var arr=[
+						{'id':"49",'channelName':"政务服务",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"50",'channelName':"商务服务",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"}
+					]
+					var sHtml = '';
+					for(var i = 0; i < arr.length; i++) {
+						sHtml += '<a class="weui-cell channel_a" href="#" name="' + arr[i].id + '" title="'+ arr[i].channelName+'">'
+									+'<div class="weui-cell__hd">'
+										+'<img src="' + arr[i].src + '" >'
+									+'</div>'
+									+'<div class="weui-cell__bd">'
+										+'<p>' + arr[i].channelName + '</p>'
+									+'</div>'
+								+'</a>';
+					}
+					$('#channel_4').html(sHtml);
+				}
+				//高新集团
+				channelNav_5();
+				function channelNav_5(){
+					var arr=[
+						{'id':"61",'channelName':"公司概况",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"62",'channelName':"公告公示",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"}
+					]
+					var sHtml = '';
+					for(var i = 0; i < arr.length; i++) {
+						sHtml += '<a class="weui-cell channel_a" href="#" name="' + arr[i].id + '" title="'+ arr[i].channelName+'">'
+									+'<div class="weui-cell__hd">'
+										+'<img src="' + arr[i].src + '" >'
+									+'</div>'
+									+'<div class="weui-cell__bd">'
+										+'<p>' + arr[i].channelName + '</p>'
+									+'</div>'
+								+'</a>';
+					}
+					$('#channel_5').html(sHtml);
+				}
+				//资讯中心
+				channelNav_6();
+				function channelNav_6(){
+					var arr=[
+						{'id':"64",'channelName':"企业动态",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"65",'channelName':"行业资讯",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"},
+						{'id':"66",'channelName':"园区新闻",'src':"${requestContext.contextPath}/resources/template/cms/default/images/demo/kssx.png"}
+					]
+					var sHtml = '';
+					for(var i = 0; i < arr.length; i++) {
+						sHtml += '<a class="weui-cell channel_a" href="#" name="' + arr[i].id + '" title="'+ arr[i].channelName+'">'
+									+'<div class="weui-cell__hd">'
+										+'<img src="' + arr[i].src + '" >'
+									+'</div>'
+									+'<div class="weui-cell__bd">'
+										+'<p>' + arr[i].channelName + '</p>'
+									+'</div>'
+								+'</a>';
+					}
+					$('#channel_6').html(sHtml);
+				}
+			}
+			
+			
+			
+			$(document).on('click','.channel_a',function(){
+				var channelId = $(this).attr('name');
+				var title = $(this).attr('title');
+				window.location.href =  "${requestContext.contextPath}/weixin/cms/open?template=default&path=/news/news&channelId=" + channelId+"&title=" + title;
+			});
+					
+		</script>
+	</body>
+	
+
+</html>

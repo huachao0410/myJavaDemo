@@ -1,5 +1,25 @@
 package cn.com.bmsoft.bmswx.template.dxms;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 import cn.com.bmsoft.base.common.security.IContextService;
 import cn.com.bmsoft.base.common.web.RequestUtil;
 import cn.com.bmsoft.dxms.domain.Myitems;
@@ -7,18 +27,8 @@ import cn.com.bmsoft.dxms.service.face.IMyItemsService;
 import cn.com.bmsoft.services.wechat.IWechatOauthService;
 import cn.com.bmsoft.weixin.service.ICommonService;
 import cn.com.bmsoft.weixin.service.IOauthService;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * 我的事项 控制器
@@ -78,9 +88,10 @@ public class MyItemsController {
         ModelAndView mv = new ModelAndView("template/dxms/myitems/index");
         try{
         	String openid = request.getParameter("openid");
-            Map<String, Object> queryParams = RequestUtil.asMap(request, false);
-            queryParams.put(openid, openid);
-            List<Myitems> list = this.myItemsService.page(0, 5, queryParams);
+        	System.out.println(openid);
+        	ModelMap map = new ModelMap();
+        	map.put("openid", openid);
+            List<Myitems> list = this.myItemsService.page(0, 5, map);
 
             ObjectMapper ob = new ObjectMapper();
             mv.addObject("list", ob.writeValueAsString(list));
@@ -101,8 +112,13 @@ public class MyItemsController {
     @RequestMapping("/finisheditems")
     public ModelAndView FinishedItems(HttpServletRequest request){
         ModelAndView mv = new ModelAndView("template/dxms/myitems/finisheditems");
-        Map<String, Object> queryParams = RequestUtil.asMap(request, false);
-        List<Myitems> list = this.myItemsService.find(queryParams);
+       // Map<String, Object> queryParams = RequestUtil.asMap(request, false);
+        String openid = request.getParameter("openid");
+       // Boolean status = request.getParameter("status");
+    	System.out.println(openid);
+    	ModelMap map = new ModelMap();
+    	map.put("openid", openid);
+        List<Myitems> list = this.myItemsService.find(map);
         try{
             ObjectMapper ob = new ObjectMapper();
             mv.addObject("list", ob.writeValueAsString(list));
@@ -132,65 +148,39 @@ public class MyItemsController {
         }
         return mv;
     }
-
+    
     /**
-     * 根据时间段查询事项
+     * 精确查询事项
      *
      * @param request
      * @return
      */
-    @RequestMapping("/queryitemsbytime")
-    public ModelAndView QueryItemsByTime(HttpServletRequest request){
-        ModelAndView mv = new ModelAndView("template/dxms/myitems/unfinisheditems");
-        Map<String, Object> queryParams = RequestUtil.asMap(request, false);
-        List<Myitems> list = this.myItemsService.find(queryParams);
-        try{
+    @RequestMapping("/exactsearch")
+	public ModelAndView Exactsearch(HttpServletRequest request){
+    	ModelAndView mv = new ModelAndView("template/dxms/myitems/exactsearch");
+    	String params = request.getParameter("params");
+    	JSONArray json=JSONArray.parseArray(params);
+    	JSONObject jsonOne;
+    	ModelMap  map= new ModelMap();
+    	//支持页面参数传递
+    	if (json != null && json.size() > 0){
+	 		for (int i=0;i<json.size();i++) {
+	 			jsonOne = json.getJSONObject(i); 
+		         map.put("bidid", (String) jsonOne.get("bidid"));
+		         map.put("bidtime", (Date) jsonOne.get("bidtime"));
+		         map.put("itemsname", (String) jsonOne.get("itemsname"));
+	 		}
+    	}
+ 		map.put("openid", (String) request.getParameter("openid"));
+ 		List<Myitems> list = this.myItemsService.find(map);
+    	String openid = request.getParameter("openid");
+    	System.out.println(openid);
+    	try{
             ObjectMapper ob = new ObjectMapper();
             mv.addObject("list", ob.writeValueAsString(list));
         }catch(Exception ex){
             mv.addObject("list", "[]");
         }
         return mv;
-    }
-
-    /**
-     * 根据流水号查询事项
-     *
-     * @param request
-     * @return
-     */
-    @RequestMapping("/queryitemsbybidid")
-    public ModelAndView QueryItemsByBidId(HttpServletRequest request){
-        ModelAndView mv = new ModelAndView("template/dxms/myitems/queryitemsbybidid");
-        Map<String, Object> queryParams = RequestUtil.asMap(request, false);
-        List<Myitems> list = this.myItemsService.find(queryParams);
-        try{
-            ObjectMapper ob = new ObjectMapper();
-            mv.addObject("list", ob.writeValueAsString(list));
-        }catch(Exception ex){
-            mv.addObject("list", "[]");
-        }
-        return mv;
-    }
-
-    /**
-     * 根据事项名称查询事项
-     *
-     * @param request
-     * @return
-     */
-    @RequestMapping("/queryitemsbyitemsname")
-    public ModelAndView QueryItemsByItemsName(HttpServletRequest request){
-        ModelAndView mv = new ModelAndView("template/dxms/myitems/queryitemsbyitemsname");
-        Map<String, Object> queryParams = RequestUtil.asMap(request, false);
-        List<Myitems> list = this.myItemsService.find(queryParams);
-        try{
-            ObjectMapper ob = new ObjectMapper();
-            mv.addObject("list", ob.writeValueAsString(list));
-        }catch(Exception ex){
-            mv.addObject("list", "[]");
-        }
-        return mv;
-    }
-
+	}
 }

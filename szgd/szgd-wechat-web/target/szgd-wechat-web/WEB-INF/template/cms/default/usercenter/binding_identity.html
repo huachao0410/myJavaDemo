@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>绑定身份证</title>
+		<#include "../../../include/head_meta.xhtml"/>
+		<#include "../../../include/head_css.xhtml"/>
+		<#include "../style.xhtml"/>
+		<style>
+			.weui-uploader__input-box{
+				width: 60px;
+				height: 60px; margin: 0 auto;
+				left: 50%; margin-left: -30px;
+			}
+			.weui-uploader__file{
+				width: 100%;
+				height: 6.7em;
+			}
+			label.error {
+				position: absolute;
+				right: 15px;
+				top: 10px;
+				z-index: 999;
+				height: 24px;
+				line-height: 24px;
+				color: red;
+				font-size: 12px;
+			}
+			.weui-panel{
+				margin-top:0;
+			}
+			.weui-cell:before{border-top: none;}
+		</style>
+	</head>
+<body class="bg-ef" style="font-size: 17px; line-height: 2.7; ">
+	<!--上传图片预览-->
+	<!--身份证照上传start-->
+	<div class="pt-10 pl-20 color-3 f-16">
+		请上传你的大陆第二代身份证
+	</div>
+
+	<div class="weui-cells weui-cells_form no-margin">
+		<p class="f-14 pt-10 pb-10 pl-20"><b>1.请先上传正面</b></p>
+		<div class="weui-cell">
+			<div class="weui-flex__item">
+				<div class="weui-uploader__files" id="uploaderFiles0">
+				</div>
+				<div class="weui-uploader__input-box one">
+					<input id="uploaderInput0" name="uploaderInput0" class="weui-uploader__input" capture="camera" type="file" accept="image/*" multiple />
+				</div>
+			</div>
+		</div>
+		<p class="f-14 pt-10 pb-10 pl-20"><b>2.请上传反面</b></p>
+		<div class="weui-cell pb-25">
+			<div class="weui-flex__item">
+				<div class="weui-uploader__files" id="uploaderFiles1">
+				</div>
+				<div class="weui-uploader__input-box two">
+					<input id="uploaderInput1" name="uploaderInput1" class="weui-uploader__input" capture="camera" type="file" accept="image/*" multiple />
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<!--绑定身份证-->
+	<form action="" method="post" class="form form-horizontal" id="formvalidation">
+		<div class="border-bottom">
+			<div class="weui-cell bg-white border-bottom pt-0 pb-0">
+				<div class="weui-cell__hd"><label class="weui-label">姓 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label></div>
+				<div class="weui-cell__bd">
+					<input class="weui-input" type="text" id="username" name="username" disabled="disabled">
+				</div>
+			</div>
+		    <div class="weui-cell bg-white pt-0 pb-0">
+				<div class="weui-cell__hd"><label class="weui-label">身份证号：</label></div>
+				<div class="weui-cell__bd">
+					<input class="weui-input" type="number" id="identityId" name="identityId" disabled="disabled">
+				</div>
+			</div>
+		</div>
+		<div class="btn_div">
+			<input class="btn_blue" type="submit" value="绑定">
+		</div>
+	</form>
+	
+		
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script src="${requestContext.contextPath}/resources/template/cms/default/js/upload.js"></script>
+</body>
+<script>
+	$(function() {
+		identify0();
+		identify1();
+		
+		//校验身份证信息
+		var username = getItemData('username');
+		$("#formvalidation").validate({
+			debug: true,
+			rules: {
+				username: {
+					required: true
+				},
+				identityId: {
+					required: true
+				}
+			},
+			messages: {
+				username: {
+					required: "请输入手机号"
+				},
+				identityId: {
+					required: "请输入验证码"
+				}
+			},
+			submitHandler: function() {
+				var uploaderInput0=$("#uploaderInput0").val();
+				var uploaderInput1=$("#uploaderInput1").val();
+				if(!uploaderInput0 && !uploaderInput1){
+					$.ajax({
+						data: {
+							username:username,
+							idcard: $("#identityId").val()
+						},
+						traditional: true,
+						type: "post",
+						url: _bindIdcard,
+						async: false,
+						success: function(data) {
+							if(data.code=='200') {
+								layer.alert("身份证绑定成功");
+								
+							}else{
+								layer.alert("绑定失败");
+							}
+							
+						},
+						error: function(error) {
+							$('#error').html(error);
+						}
+					});
+				}else if(uploaderInput0==" "){
+					layer.alert("请上传身份证正面");
+				}else if(uploaderInput1==" "){
+					layer.alert("请上传身份证反面");
+				}else{
+					layer.alert("请上传身份证图片");
+				}
+				
+			}
+		});
+		
+	});
+	
+	//zhengmian
+	function identify0(){
+		//图片上传
+        var tmpl = '<img width="100%" src="#url#">',
+            $uploaderInput = $("#uploaderInput0"),
+            $uploaderFiles = $("#uploaderFiles0");
+   
+        $uploaderInput.on("change", function(e){
+        	console.log(e.target.files);
+            var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+             if (url) {
+                src = url.createObjectURL(files[0]);
+            } else {
+                src = e.target.result;
+            }
+            $uploaderFiles.html($(tmpl.replace('#url#', src)));
+            
+            $(".one").hide(); //隐藏上传按钮
+
+			uploadImage0(files[0])
+        });
+	}
+	function uploadImage0(file) {
+        //判断是否有选择上传文件
+        var imgPath = $("#uploaderInput0").val();
+        var name='abcs';
+        if (imgPath == "") {
+            alert("请选择上传图片！");
+            return;
+        }
+        //判断上传文件的后缀名
+        var strExtension = imgPath.substr(imgPath.lastIndexOf('.') + 1);
+        if (strExtension != 'jpg' && strExtension != 'gif'
+        && strExtension != 'png' && strExtension != 'bmp') {
+            alert("请选择图片文件");
+            return;
+        }
+        var formData = new FormData();
+		formData.append("file", file);
+//		formData.append("name", name);
+        $.ajax({
+            type: "POST",
+            url: _upLoad0,
+            data: formData,
+            contentType: false,
+			processData: false,
+            success: function(data) {
+                $("#username").val(data.datas[0].name);
+				$("#identityId").val(data.datas[0].identityId);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("上传失败，请检查网络后重试");
+            }
+        });
+    }
+	
+	//fanmian
+	function identify1(){
+		//图片上传
+        var tmpl = '<img width="100%" src="#url#">',
+            $uploaderInput = $("#uploaderInput1"),
+            $uploaderFiles = $("#uploaderFiles1");
+   
+        $uploaderInput.on("change", function(e){
+        	console.log(e.target.files);
+            var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+             if (url) {
+                src = url.createObjectURL(files[0]);
+            } else {
+                src = e.target.result;
+            }
+            $uploaderFiles.html($(tmpl.replace('#url#', src)));
+            
+            $(".two").hide(); //隐藏上传按钮
+
+			uploadImage1(files[0])
+        });
+	}
+	function uploadImage1(file) {
+        //判断是否有选择上传文件
+        var imgPath = $("#uploaderInput1").val();
+        var name='abcs';
+        if (imgPath == "") {
+            alert("请选择上传图片！");
+            return;
+        }
+        //判断上传文件的后缀名
+        var strExtension = imgPath.substr(imgPath.lastIndexOf('.') + 1);
+        if (strExtension != 'jpg' && strExtension != 'gif'
+        && strExtension != 'png' && strExtension != 'bmp') {
+            alert("请选择图片文件");
+            return;
+        }
+        var formData = new FormData();
+		formData.append("file", file);
+//		formData.append("name", name);
+        $.ajax({
+            type: "POST",
+            url: _upLoad1,
+            data: formData,
+            contentType: false,
+			processData: false,
+            success: function(data) {
+                alert("上传成功");
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("上传失败，请检查网络后重试");
+            }
+        });
+   }
+	
+	
+</script>
+
+</html>

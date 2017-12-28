@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>新闻详情</title>
+		<#include "../../../include/head_meta.xhtml"/>
+		<#include "../../../include/head_css.xhtml"/>
+		<#include "../style.xhtml"/>
+	</head>
+	<style type="text/css">
+		#moreComment{font-size: 14px;color: #5a98de;}
+
+	</style>
+
+	<body>
+		<h1 class="news_title" id="title"></h1>
+		<div class="news_info">
+			<span class="pr-10 color-blue" id="author"></span>
+			<span class="pr-10" id="releaseDate"></span>
+		</div>
+		<div class="news_content">
+			
+		</div>
+		
+		<div class="news_bottom">
+			<a class="news_bottom_a fl" href="#">阅读原文</a>
+			<a class="collect_btn fl" href="javascript:;"><i class="icon Hui-iconfont">&#xe69e;</i></a>
+			<!--<a href="javascript:;"><i class="icon Hui-iconfont">&#xe69d;</i></a>-->
+			<div class="clear"></div>
+		</div>
+		<!--点赞-->
+		<div class="pl-15 mb-10 mt-10">
+			<!--点赞-->
+			<a href="javascript:;" class="fl mr-20 praise_a" id="praiseBtn">
+				<i class="icon Hui-iconfont">&#xe697;</i>
+				<span id="praiseNumber"></span>
+			</a>
+			
+			<div class="clear"></div>
+		</div>
+		<!--评论-->
+		<div class="comment_div mt-10">
+			<div class="comment_t"><span class="comment_b">评论</span></div>
+			<div class="clear"></div>
+				
+			<!--我要评论-->
+			<div class="comment_edit_div mt-15">
+				<div class="comment_user_img">
+					<img src="${requestContext.contextPath}/resources/template/cms/default/images/tx.jpg" alt="" />
+				</div>
+				<form action="" method="post" class="form form-horizontal" id="formComment">
+					<input type="text" id="commentText" name="commentText" class="comment_input_text" placeholder="写下你的评论..." />
+					<div class="comment_btn_div">
+						<a href="javascript:;" class="comment_cancel">取消</a>
+						<input class="comment_submit" type="submit" value="评论" disabled="disabled">
+					</div>
+				</form>
+			</div>
+			<!--评论列表-->
+			<ul class="comment_list" id="commentList">
+				
+			</ul>
+			<div class="text-center pb-20"><a id="moreComment" hrel="#">查看更多评论》</a></div>
+			<!--<div class="weui-loadmore">
+			    <i class="weui-loading"></i>
+			    <span class="weui-loadmore__tips">正在加载</span>
+			</div>-->
+			
+			
+		</div>
+
+		<#include "../../../include/head_js.xhtml"/>
+		<#include "../default_head_js.xhtml"/>
+		<script>
+			var id = getSearchObj().id;  //获取地址栏departid
+			var username = getItemData("username");  //获取用户名
+			$(function(){
+			 	newsDetail();   //新闻详情
+			 	commentEdit();  //评论
+			 	getList();      //评论列表
+			 	praise();       //评论点赞、收藏
+		        
+		        $("#moreComment").on('click',function(){
+					window.location.href =  "${requestContext.contextPath}/weixin/cms/open?template=default&path=/news/comment_list&contentId=" + id;
+		        })
+			});
+			 
+			
+			 
+			//新闻详情
+			
+			function newsDetail(){
+				$.ajax({
+					type:"get",
+					url: _newsDetail+id+'?username='+username,
+					async:true,
+					beforeSend:function(){
+			           $("#vvv").append('<img class="news_user_img" src="${requestContext.contextPath}/resources/template/cms/default/images/user_img.jpg" />');
+			        },
+					success: function(data) {
+						var obj=data.datas[0];
+						$("#title").text(nullChange(obj.title));
+						$("#author").text(nullChange(obj.author));
+						$("#releaseDate").text(nullChange(obj.releaseDate));
+						$(".news_content").html(nullChange(obj.txt));
+						$("#praiseNumber").text(nullNumber(obj.upsDay));
+						
+						//判断文章是否已经收藏
+						var coe=obj.isCollection;
+						if(coe==1){
+							$(".collect_btn").addClass('on');
+							$(".collect_btn").html('<i class="icon Hui-iconfont">&#xe69d;</i>');
+						}
+						
+					}
+				});
+				
+			}
+			
+			//评论列表
+		    function getList() {
+		
+		        $.ajax({
+		            url: _comment,
+		            type: "get",
+		            data: {
+		                contentId:id,
+		                page: 1,
+		                rows: 3
+		            },
+		            success: function (data) {
+		                if (data.status == 1 && data.code == 200) {
+		                    var html = '';
+		                    var list = data.datas;
+		                    for (var i = 0 ; i < list.length; i ++) {
+		                    	var obj=list[i];
+		                        html +='<li>'
+											+'<div class="comment_user_img">'
+												+'<img src="${requestContext.contextPath}/resources/template/cms/default/images/tx.jpg" alt="" />'
+											+'</div>'
+											+'<div class="comment_content">'
+												+'<b class="comment_username">杨科</b>'
+												+'<span class="comment_n">'+nullChange(obj.text)+'</span>'
+												+'<div class="comment_operation">'
+													+'<span class="comment_time fl pr-10">'+nullNumber(obj.createTime)+'</span>'
+//													+'<span class="comment_praise fl pr-10" name="'+obj.id+'"><i class="icon Hui-iconfont">&#xe66d;</i></span>'
+//													+'<span class="comment_step fl" name="'+obj.id+'"><i class="icon Hui-iconfont">&#xe66e;</i></span>'
+													+'<span class="comment_step_number fr pl-10" name="'+obj.id+'"><i class="icon Hui-iconfont">&#xe66e;</i> <font class="step_number">'+nullNumber(obj.downs)+'</font></span>'
+													+'<span class="comment_praise_number fr" name="'+obj.id+'"><i class="icon Hui-iconfont">&#xe66d;</i> <font class="praise_number">'+nullNumber(obj.ups)+'</font></span>'
+												+'</div>'
+											+'</div>'
+										+'</li>';
+		                       
+		                    }
+		                     $("#commentList").append(html);
+		                   
+		                } else {
+		                    alert(data.errorMessage);
+		                }
+		            },
+		            error: function (data) {
+		                console.log(data.errorMessage);
+		            }
+		        });
+		
+		    }
+		    //评论编辑
+			function commentEdit(){
+				var comment_btn_div=$(".comment_btn_div");
+				var comment_input_text=$(".comment_input_text");
+				var comment_submit=$(".comment_submit");
+				//评论框聚焦
+				comment_input_text.focus(function(){     
+			        comment_btn_div.show();  
+			        //输入框值发送变化时，提交按钮发送变化
+			        comment_input_text.bind('input propertychange', function(){ 
+				        var val=comment_input_text.val();
+				        if(val==""){
+				        	comment_submit.attr("disabled", "disabled");
+				        }else if(val!==''){
+				        	comment_submit.removeAttr("disabled"); 
+				        }
+			        });
+			        
+			     });
+			     //点击取消，隐藏按钮
+			    $(".comment_cancel").on('click',function(){
+			    	comment_btn_div.hide();  
+			    })
+			    //评论提交
+			    $("#formComment").validate({
+			    	debug:true,
+			    	rules:{
+		     			 commentText: { required: true }
+			    	},
+				    messages: {
+				      commentText: { required: "请输入评论内容" }
+				    },
+				    submitHandler: function() {
+				    	if(username != null && username != '') {
+				    		$.ajax({
+								type:"post",
+								url: _publish,
+								data:{
+									username:username,
+									contentId:id,
+									text:comment_input_text.val()
+								},
+								async:true,
+								success: function(data) {
+									if(data.code=='200'){
+										comment_btn_div.hide();   //提交成功隐藏提交按钮
+										comment_input_text.val("");  //清空输入框的值
+									$("#commentList").html(""); //清空评论列表
+										getList();  //加载评论列表 
+									}
+								},
+								error: function(error) {
+			                        $('#error').html(error);
+								}
+							});
+						} else {
+							location.href = "${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/login";
+						}
+						
+				    }
+			    });
+			    
+			}
+			
+			//点赞
+			function praise(){
+				//详情点赞
+				$(document).on('click','#praiseBtn',function(){
+					var _this=$(this);
+					if(username != null && username != '') {
+						var praiseNumber=$(this).children("#praiseNumber");
+						var n=praiseNumber.text();  //赞总数
+						var number=parseInt(n);
+						if(_this.hasClass('on')){
+							_this.removeClass('on');
+							number-=1;
+							praiseNumber.text(number);
+						}else{
+							$.ajax({
+								type:"post",
+								url: _newsDetailUps,
+								data:{
+									username:username,
+									contentId:id
+								},
+								async:true,
+								success: function(data) {
+									if(data.code=='501'){
+										layer.alert("请5分钟之后再点击");
+									}else if(data.code=='200'){
+										_this.addClass('on');
+										number+=1;
+										praiseNumber.text(number);
+									}
+								},
+								error: function(error) {
+			                        $('#error').html(error);
+								}
+							});
+						}
+						
+					} else {
+						location.href = "${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/login";
+					}
+				});
+				//详情收藏
+				$(document).on('click','.collect_btn',function(){
+					var _this=$(this);
+					if(username != null && username != '') {
+						$.ajax({
+							type:"post",
+							url: _newsDetailCollection,
+							data:{
+								username:username,
+								contentId:id
+							},
+							async:true,
+							success: function(data) {
+								if(data.status==1){
+									_this.addClass('on');
+									_this.html('<i class="icon Hui-iconfont">&#xe69d;</i>');
+									layer.alert("用户收藏内容成功");
+								}else if(data.status==0){
+									if(data.code=='500'){
+										layer.alert("内部程序出错");
+									}else if(data.code=='200'){
+										_this.removeClass('on');
+										_this.html('<i class="icon Hui-iconfont">&#xe69e;</i>');
+										layer.alert("取消用户收藏内容成功");
+									}
+								}
+							},
+							error: function(error) {
+		                        $('#error').html(error);
+							}
+						});
+						
+					} else {
+						location.href = "${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/login";
+					}
+				});
+				//评论点赞
+				$(document).on('click','.comment_praise_number',function(){
+					var commentId = $(this).attr('name');
+					var _this=$(this);
+					if(username != null && username != '') {
+						var praiseNumber=$(this).children(".praise_number");
+						var n=praiseNumber.text();  //赞总数
+						var number=parseInt(n);
+						
+						
+						
+//						var comment_praise_number=$(this).parent().children(".comment_praise_number");
+//						var comment_praise_number_font=comment_praise_number.children('font');
+//						var n=comment_praise_number_font.text();  //赞总数
+//						var number=parseInt(n);
+						
+						if(_this.hasClass('on')){
+							_this.removeClass('on');
+							number-=1;
+							praiseNumber.text(number);
+							
+						}else{
+							
+							$.ajax({
+								type:"post",
+								url: _ups,
+								data:{
+									username:username,
+									commentId:commentId
+								},
+								async:true,
+								success: function(data) {
+									if(data.code=='501'){
+										layer.alert("请5分钟之后再点击");
+									}else if(data.code=='200'){
+										_this.addClass('on');
+										number+=1;
+										praiseNumber.text(number);
+									}
+								},
+								error: function(error) {
+			                        $('#error').html(error);
+								}
+							});
+						}
+						
+					} else {
+						location.href = "${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/login";
+					}
+				});
+				
+				//评论踩
+				$(document).on('click','.comment_step_number',function(){
+					var commentId = $(this).attr('name');
+					var _this=$(this);
+					if(username != null && username != '') {
+						var stepNumber=$(this).children(".step_number");
+						var n=stepNumber.text();  //赞总数
+						var number=parseInt(n);
+						
+//						var comment_step_number=$(this).parent().children(".comment_step_number");
+//						var comment_step_number_font=comment_step_number.children('font');
+//						var n=comment_step_number_font.text();  //踩总数
+//						var number=parseInt(n);
+						
+						if(_this.hasClass('on')){
+							_this.removeClass('on');
+							number-=1;
+							stepNumber.text(number);   
+							
+						}else{
+							
+							$.ajax({
+								type:"post",
+								url: _downs,
+								data:{
+									username:username,
+									commentId:commentId
+								},
+								async:true,
+								success: function(data) {
+									if(data.code=='501'){
+										layer.alert("请5分钟之后再点击");
+									}else if(data.code=='200'){
+										_this.addClass('on');
+										number+=1;
+										stepNumber.text(number);
+									}
+								},
+								error: function(error) {
+			                        $('#error').html(error);
+								}
+							});
+						}
+						
+					} else {
+						location.href = "${requestContext.contextPath}/weixin/cms/open?template=default&path=/common/login";
+					}
+				});
+				
+				
+			  
+			}
+		</script>
+	</body>
+	
+
+</html>

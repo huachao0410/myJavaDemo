@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<#include "../../head/head_css.xhtml" />
+
+		<style type="text/css">
+			.service-panel {
+				width: 90%;
+				margin: 10px;
+			}
+
+			.site-content {
+				width: 100%;
+				margin-left: 10px;
+				float: left;
+			}
+
+			.Hui-article-box {
+				top: 0px;
+			}
+
+		</style>
+		<title>REST服务</title>
+	</head>
+	<body>
+		<header class="navbar-wrapper">
+			<div class="navbar navbar-fixed-top">
+				<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">服务接口描述</a>
+				</div>
+			</div>
+		</header>
+		<aside class="Hui-aside">
+			<div class="mt-20 ml-20 bk_2">
+				<ul class="f-16" id="menu">
+				</ul>
+			</div>
+		</aside>
+		<section class="Hui-article-box">
+			<div class="Hui-article mt-20 ml-20" id="restServices">
+				<table id="list" class="table table-border table-bordered"></table>
+			</div>
+
+		</section>
+
+		<#include "../../head/head_js.xhtml" />
+		<script type="text/javascript">
+		
+			var title='';
+			$(function() {
+
+				showServices();
+			});
+			
+			function showServices() {
+				$('#restServices').html('');
+				$('#menu').html('');
+				
+				var index = 1;
+				
+				$.ajax({
+					url:'${requestContext.contextPath}/doc/list',
+					type: 'get',
+					dataType: "json",
+					success: function(data) {
+						if(data.datas) {
+							for (var i = 0; i < data.datas.length; i++) {
+								var obj = data.datas[i];
+                                var html = '';
+								if(title != obj.service) {
+									title = obj.service;
+									var titles = title.split('：');
+									var menuId = titles[0];
+									
+									$('#menu').append('<li class="lh-30"><a href="#' + menuId + '">' + index + '、' + titles[1] + '</a></li>');
+                                    html += '<h3 id="' + menuId + '">' + title + '</h3>';
+
+									index++;
+								} 
+								html += '<div class="panel panel-default service-panel">';
+								html += '<div class="panel-header">' + obj.method + '</div>';
+								html += '<div class="panel-body">';
+								html += '<p><b>类型：</b>' + obj.type + '</p>';
+								html += '<p><b>地址：</b>' + obj.url + '</p>';
+								html += '<p><b>参数：</b></p>';
+								if(obj.params) {
+									html += '<ol class="linenums">';
+									for (var j = 0; j < obj.params.length; j++) {
+										html += '<li>' + obj.params[j] + '</li>';
+									}
+									html += '</ol>';
+								}
+								html += '</div>';
+                                html += '</div>';
+								$('#restServices').append(html);
+							}
+						}
+                        $('#restServices').append('<div class="footer mt-20">Copyright 北明软件有限公司 内容发布系统 2017</div>');
+					}
+				});
+			}
+
+		</script>
+	</body>
+
+</html>

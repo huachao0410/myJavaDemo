@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>搜索</title>
+		<#include "../../include/head_meta.xhtml"/>
+		<#include "../../include/head_css.xhtml"/>
+		<#include "style.xhtml"/>
+	</head>
+	<style type="text/css">
+		
+
+	</style>
+
+	<body>
+		<!--header-->
+		<div class="header_outside">
+			<div class="header">
+				<!--search-->
+				<div class="weui-search-bar ml-10 mt-3 pl-0 no-bg" id="searchBar">
+					<div class="weui-search-bar__form">
+						<div class="weui-search-bar__box">
+							<i class="weui-icon-search"></i>
+							<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+							<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+						</div>
+						<label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+				          	<i class="weui-icon-search"></i>
+				        	<span>搜索</span>
+				        </label>
+					</div>
+					<a href="javascript:" class="weui-search-bar__cancel-btn color-white" id="searchCancel">取消</a>
+				</div>
+				
+			</div>
+		</div>
+		<!--热词-->
+		<div class="mt-20 ml-15 mr-15">
+			<b class="hot_title">热词</b>
+			<div class="hot_word">
+				<a href="#">热词</a>
+				<a href="#">热词1</a>
+				<a href="#">热词2</a>
+				<a href="#">热词3</a>
+				<a href="#">热词3default_footer</a>
+				<a href="#">热词</a>
+				<a href="#">热词1</a>
+				<a href="#">热词2</a>
+				<a href="#">热词3</a>
+			</div>
+		</div>
+		<#include "../../include/default_footer.xhtml"/>
+		<#include "../../include/head_js.xhtml"/>
+		<#include "../../include/default_head_js.xhtml"/>
+		<script>
+			$(function () {
+				
+
+				
+			});
+		</script>
+	</body>
+	
+
+</html>

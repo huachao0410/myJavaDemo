@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <#include "../../../include/head_meta.xhtml"/>
+    <#include "../../../include/head_css.xhtml"/>
+    <#include "../style.xhtml"/>
+    <title>音频接口</title>
+</head>
+<body>
+
+<div class="btn_div">
+    <button id="startRecord" class="weui-btn weui-btn_primary">开始录制</button>
+
+</div>
+<div class="btn_div">
+    <button id="stopRecord" class="weui-btn weui-btn_primary">停止录制</button>
+
+</div>
+<div class="btn_div">
+    <button id="playVoice" class="weui-btn weui-btn_primary">播放语音</button>
+
+</div>
+<div class="btn_div">
+    <button id="pauseVoice" class="weui-btn weui-btn_primary">暂停播放</button>
+
+</div>
+<div class="btn_div">
+    <button id="stopVoice" class="weui-btn weui-btn_primary">停止播放</button>
+
+</div>
+<div class="btn_div">
+    <button id="uploadVoice" class="weui-btn weui-btn_primary">上传语音</button>
+
+</div>
+<div class="btn_div">
+    <button id="downloadVoice" class="weui-btn weui-btn_primary">下载语音</button>
+
+</div>
+<div class="btn_div">
+    <button id="translateVoice" class="weui-btn weui-btn_primary">智能音频</button>
+
+</div>
+
+<#include "../../../include/head_js.xhtml"/>
+<#include "../default_head_js.xhtml"/>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+
+<script>
+
+    var voice = {
+        localId: '',
+        serverId: ''
+    };
+    $(function () {
+        var jsApiList = [
+            'startRecord',
+            'stopRecord',
+            'onVoiceRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'onVoicePlayEnd',
+            'uploadVoice',
+            'downloadVoice',
+            'translateVoice'
+
+        ] ;// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '${appid}', // 必填，公众号的唯一标识
+            timestamp: ${signature.timestamp}, // 必填，生成签名的时间戳
+            nonceStr: '${signature.nonceStr}', // 必填，生成签名的随机串
+            signature: '${signature.signature}',// 必填，签名，见附录1
+            jsApiList:jsApiList
+        });
+
+        wx.ready(function () {
+            /**开始录制*/
+            $('#startRecord').on('click',function () {
+                startRecord();
+            });
+
+            /**停止录制*/
+            $('#stopRecord').on('click',function () {
+                stopRecord();
+            });
+
+            /**播放语音接口*/
+            $('#playVoice').on('click',function () {
+                playVoice();
+            });
+
+            /**暂停播放接口*/
+            $('#pauseVoice').on('click',function () {
+                pauseVoice();
+            });
+
+            /**停止播放接口*/
+            $('#stopVoice').on('click',function () {
+                stopVoice();
+            });
+
+            /**上传语音接口*/
+            $('#uploadVoice').on('click',function () {
+                uploadVoice();
+            });
+
+            /**下载语音接口*/
+            $('#downloadVoice').on('click',function () {
+                downloadVoice();
+            });
+
+            /**音频识别返回结果*/
+            $('#translateVoice').on('click',function () {
+                translateVoice();
+            });
+
+            /**监听语音播放完毕接口*/
+            onVoicePlayEnd();
+
+            /**监听录音自动停止接口*/
+            onVoiceRecordEnd();
+        });
+
+    });
+
+    /**开始录制*/
+    function startRecord() {
+        /**第一次开启会有弹框确认，允许还是拒绝*/
+        wx.startRecord({
+            cancel: function () {
+                alert('用户拒绝授权录音');
+            }
+        });
+    }
+
+    /**停止录制*/
+    function stopRecord() {
+
+        wx.stopRecord({
+            success: function (res) {
+                if (res.localId) {
+                    alert(JSON.stringify(res));
+                    voice.localId = res.localId;
+                }else {
+                    alert("录制信息超过一分钟已经自动保存");
+                }
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+    }
+
+    /**监听录音自动停止接口*/
+    function onVoiceRecordEnd() {
+
+        wx.onVoiceRecordEnd({
+            // 录音时间超过一分钟没有停止的时候会执行 complete 回调
+            complete: function (res) {
+                voice.localId = res.localId;
+                alert('录音时间已超过一分钟');
+            }
+        });
+    }
+
+    /**播放语音接口*/
+    function playVoice() {
+
+        if (voice.localId == '') {
+            alert('请先使用 startRecord 接口录制一段声音');
+            return;
+        }
+        wx.playVoice({
+            localId: voice.localId
+        });
+    }
+
+    /**暂停播放接口*/
+    function pauseVoice() {
+
+        wx.pauseVoice({
+            localId: voice.localId
+        });
+    }
+
+    /**停止播放接口*/
+    function stopVoice() {
+
+        wx.stopVoice({
+            localId: voice.localId
+        });
+    }
+
+    /**监听语音播放完毕接口*/
+    function onVoicePlayEnd() {
+
+        wx.onVoicePlayEnd({
+            complete: function (res) {
+                alert('录音（' + res.localId + '）播放结束');
+            }
+        });
+    }
+    /**上传语音接口*/
+    function uploadVoice() {
+
+        if (voice.localId == '') {
+            alert('请先使用 startRecord 接口录制一段声音');
+            return;
+        }
+        wx.uploadVoice({
+            localId: voice.localId,
+            success: function (res) {
+                alert('上传语音成功，serverId 为' + res.serverId);
+                voice.serverId = res.serverId;
+            }
+        });
+    }
+
+    /**下载语音接口*/
+    function downloadVoice() {
+
+        if (voice.serverId == '') {
+            alert('请先使用 uploadVoice 上传声音');
+            return;
+        }
+        wx.downloadVoice({
+            serverId: voice.serverId,
+            success: function (res) {
+                alert('下载语音成功，localId 为' + res.localId);
+                voice.localId = res.localId;
+            }
+        });
+    }
+
+
+    /**音频识别返回结果*/
+    function translateVoice() {
+        if (voice.localId == '') {
+            alert('请先使用 startRecord 接口录制一段声音');
+            return;
+        }
+        wx.translateVoice({
+            localId: voice.localId,
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            complete: function (res) {
+                if (res.hasOwnProperty('translateResult')) {
+                    alert('识别结果：' + res.translateResult);
+                } else {
+                    alert('无法识别');
+                }
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>
